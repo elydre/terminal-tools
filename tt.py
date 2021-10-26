@@ -25,9 +25,9 @@ def ls():
         rep = com[1]
     except:
         rep = "/"
-    colorprint(cy.cy_path()+action_rep,Colors.vert)
+    colorprint(cy.path()+action_rep,Colors.vert)
     colorprint("│",Colors.blanc)
-    liste_cont = cy.cy_ls(action_rep + "/" + rep)
+    liste_cont = cy.ls(action_rep + "/" + rep)
     for x in range(len(liste_cont)):
         element = liste_cont[x]
         if x == len(liste_cont)-1: colorprint("└─",Colors.blanc,Background.none,False,False,False)
@@ -51,7 +51,7 @@ def cd():
             to_test = "".join( "/" + t for t in [ mors for mors in action_rep + "/" + loc.split("/") if mors != "" ])
 
             try:
-                cy.cy_ls(to_test)
+                cy.ls(to_test)
                 action_rep = to_test
             except:
                 erreur("002","dossier de destination invalide, ici -> "+to_test)
