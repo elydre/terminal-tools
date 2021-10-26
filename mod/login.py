@@ -11,15 +11,14 @@ islogin_l = []
 bad = []
 login_liste = cy.cy_rfil_rela("/sys/","login.txt")
 print(cy.cy_ls("/"))
-user_liste = login_liste.split("\n")[0]
-passw_liste = login_liste.split("\n")[1]
+user_liste = login_liste.split("\n")
 def clear():
     system('cls' if name == 'nt' else 'clear')
 
 def done_bad_co(is_login = True, co_login_="" ,add=True, done = False):
     global logins, bad, islogin_l
     if add:
-        if is_login == False:
+        if not is_login:
             temp = "".join("•" for _ in range(len(list(co_login_))))
             co_login_ = temp
         logins.append(co_login_)
@@ -30,15 +29,18 @@ def done_bad_co(is_login = True, co_login_="" ,add=True, done = False):
         else: colorprint("password",Colors.magenta)
         colorprint("-} ",Colors.magenta,Background.none,False,False,False)
         print(logins[x],end="")
-        if bad[x]: colorprint(" √",Colors.vert)
+        if islogin_l[x]:
+            print()
+        elif bad[x]: colorprint(" √",Colors.vert)
         else: colorprint(" x",Colors.rouge)
 
-def pw():
+def pw(co_login):
     colorprint("password",Colors.magenta)
     co_passw = colorinput("-} ",Colors.magenta)
     done = False
-    for all_passw in passw_liste.split("/"):
-        if all_passw != "" and co_passw != "" and int(all_passw) == int(sunbreaker(co_passw)):
+    for user in user_liste:
+        name, mdp = user.split("/")[0], user.split("/")[1]
+        if co_login != "" and co_passw != "" and int(name) == sunbreaker(co_login) and int(mdp) == sunbreaker(co_passw):
             clear()
             done_bad_co(False,co_passw,True,True)
             done = True
@@ -49,23 +51,16 @@ def pw():
         login()
 
 def login():
-    global co_login
+    global USER
     colorprint("login",Colors.magenta)
     co_login = colorinput("-} ",Colors.magenta)
-    done = False
-    for all_login in user_liste.split("/"):
-        if all_login != "" and co_login != "" and int(all_login) == int(sunbreaker(co_login)):
-            clear()
-            done_bad_co(True,co_login,True,True)
-            done = True
-            pw()
-            break
-    if not done:
-        clear()
-        done_bad_co(True,co_login)
-        login()
+    USER = co_login
+    logins.append(co_login)
+    bad.append(True)
+    islogin_l.append(True)
+    pw(co_login)
 
 def StartLogin():
     clear()
     login()
-    return(co_login)
+    return(USER)
