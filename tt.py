@@ -41,22 +41,15 @@ def cd():
         loc = ""
         try:
             for x in range(len(com)-2): loc += com[x + 1] + " "
-        except:
-            pass
+        except: pass
         loc += com[len(com)-1]
         loc = loc.replace("\\","/")
         if loc.startswith("..") or loc.startswith("/.."):
-            temp4 = ""
             temp3 = action_rep.split("/")
-            for x in range(len(temp3)-1): temp4 += "/" + temp3[x]
-            action_rep = temp4
+            action_rep = "".join("/" + temp3[x] for x in range(len(temp3)-1))
         else:
-            to_test = action_rep + "/" + loc
-            temp = []
-            for mors in to_test.split("/"): 
-                if mors != "": temp.append(mors)
-            to_test = ""
-            for temp2 in temp: to_test += "/" + temp2
+            to_test = "".join( "/" + t for t in [ mors for mors in action_rep + "/" + loc.split("/") if mors != "" ])
+
             try:
                 cy.cy_ls(to_test)
                 action_rep = to_test
@@ -88,12 +81,11 @@ def interpreteur(ipt):
     global com
     com = str(ipt).split(" ")
     rc = com[0] #root commande
-    if rc == "clear" or rc == "cls": clear()
+    if rc in ["clear", "cls"]: clear()
     elif rc == "bvn": bvn()
     elif rc == "ls": ls()
     elif rc == "cd": cd()
-    elif rc == "": pass
-    else: erreur("001")
+    elif rc != "": erreur("001")
 
 while True:
     interpreteur(user_input())

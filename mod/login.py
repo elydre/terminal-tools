@@ -20,8 +20,7 @@ def done_bad_co(is_login = True, co_login_="" ,add=True, done = False):
     global logins, bad, islogin_l
     if add:
         if is_login == False:
-            temp = ""
-            for loop in range(len(list(co_login_))): temp+="•"
+            temp = "".join("•" for _ in range(len(list(co_login_))))
             co_login_ = temp
         logins.append(co_login_)
         bad.append(done)
@@ -39,13 +38,12 @@ def pw():
     co_passw = colorinput("-} ",Colors.magenta)
     done = False
     for all_passw in passw_liste.split("/"):
-        if all_passw != "" and co_passw != "":
-            if int(all_passw) == int(sunbreaker(co_passw)):
-                clear()
-                done_bad_co(False,co_passw,True,True)
-                done = True
-                break
-    if done == False:
+        if all_passw != "" and co_passw != "" and int(all_passw) == int(sunbreaker(co_passw)):
+            clear()
+            done_bad_co(False,co_passw,True,True)
+            done = True
+            break
+    if not done:
         clear()
         done_bad_co(False,co_passw,True)
         login()
@@ -56,14 +54,13 @@ def login():
     co_login = colorinput("-} ",Colors.magenta)
     done = False
     for all_login in user_liste.split("/"):
-        if all_login != "" and co_login != "":
-            if int(all_login) == int(sunbreaker(co_login)):
-                clear()
-                done_bad_co(True,co_login,True,True)
-                done = True
-                pw()
-                break
-    if done == False:
+        if all_login != "" and co_login != "" and int(all_login) == int(sunbreaker(co_login)):
+            clear()
+            done_bad_co(True,co_login,True,True)
+            done = True
+            pw()
+            break
+    if not done:
         clear()
         done_bad_co(True,co_login)
         login()
