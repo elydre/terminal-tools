@@ -14,12 +14,12 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.5"
+tt_version = "v0.0.6"
 
 ##### importation ####
 import system.mod.cytron as cy
 from system.mod.ColorPrint import Background, Colors, colorprint, colorinput
-from system.mod.sunbreaker import sunbreaker
+from system.mod.sunbreaker import sunbreaker as sb
 from system.mod.login import StartLogin
 from system.mod.updater import update as start_update, road
 from urllib.request import urlopen
@@ -156,6 +156,9 @@ def update():  # sourcery no-metrics
         u_rdl()
     else: erreur("004",commande)
 
+def sunbreaker():
+    colorprint(str(sb("".join(x+" "for x in com[1:len(com)]).strip())), Colors.magenta, ligne = True)
+
 def help():
     def printhelp(nom,doc):
         colorprint(nom,Colors.magenta,Background.none,False,True,False)
@@ -165,6 +168,7 @@ def help():
     printhelp("clear","efface la console")
     printhelp("help","affiche cette aide")
     printhelp("ls [chemin]","affiche le contenu dossier de travail ou du dossier spécifier")
+    printhelp("sunbreaker <str>","afficher le break du texte entré")
     printhelp("update <*arg>","lance le systeme de mise a jour (update help)")
     printhelp("verion","affiche la version de terminal tools et des modules")
 
@@ -185,9 +189,10 @@ def interpreteur(ipt):
     rc = com[0] #root commande
     if rc == "bvn": bvn()
     elif rc == "cd": cd()
-    elif rc == "help": help()
     elif rc in ["clear", "cls"]: clear()
+    elif rc == "help": help()
     elif rc == "ls": ls()
+    elif rc in ["sunbreaker", "sb"]: sunbreaker()
     elif rc == "update": update()
     elif rc == "version": version()
     elif rc != "": erreur("001")
