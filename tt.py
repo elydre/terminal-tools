@@ -1,3 +1,21 @@
+'''
+--|~|--|~|--|~|--|~|--|~|--|~|--
+
+██  ████        ██████        ██
+████    ██     ██           ████
+██      ██   ████████     ██  ██
+████████       ██       ██    ██
+██             ██       █████████
+██             ██             ██
+██
+ - codé en : UTF-8
+ - langage : python 3
+ - GitHub  : github.com/pf4-DEV
+--|~|--|~|--|~|--|~|--|~|--|~|--
+'''
+
+version = "v0.0.3"
+
 ##### importation ####
 from mod.ColorPrint import Background, Colors, colorprint, colorinput
 from mod.sunbreaker import sunbreaker
@@ -11,6 +29,15 @@ def erreur(num,text="commande inconnue"):
     colorprint(": "+text,Colors.rouge,Background.none,False,False,True)
 
 ##### commandes #####
+
+def user_input():
+    colorprint("\n┌──(",Colors.magenta,Background.none,False,False,False)
+    colorprint(co_user,Colors.magenta,Background.none,False,True,False)
+    colorprint(")-[",Colors.magenta,Background.none,False,False,False)
+    colorprint(action_rep,Colors.cyan,Background.none,False,True,False)
+    colorprint("]",Colors.magenta,Background.none,False,False,True)
+    return(colorinput("└─} ",Colors.magenta,Background.none,False,False))
+
 def clear():
     system('cls' if name == 'nt' else 'clear')
 
@@ -21,10 +48,8 @@ def bvn():
     colorprint("Copyright (C) pf4. Tous droits réservés.\n",Colors.magenta,Background.none,False,False,True)
 
 def ls():
-    try:
-        rep = com[1]
-    except:
-        rep = "/"
+    try: rep = com[1]
+    except: rep = "/"
     colorprint(cy.cy_path()+action_rep,Colors.vert)
     colorprint("│",Colors.blanc)
     liste_cont = cy.cy_ls(action_rep + "/" + rep)
@@ -41,8 +66,7 @@ def cd():
         loc = ""
         try:
             for x in range(len(com)-2): loc += com[x + 1] + " "
-        except:
-            pass
+        except: pass
         loc += com[len(com)-1]
         loc = loc.replace("\\","/")
         if loc.startswith("..") or loc.startswith("/.."):
@@ -57,18 +81,18 @@ def cd():
             try:
                 cy.cy_ls(to_test)
                 action_rep = to_test
-            except:
-                erreur("002","dossier de destination invalide, ici -> "+to_test)
-    else:
-        action_rep = "/"
+            except: erreur("002","dossier de destination invalide, ici -> "+to_test)
+    else: action_rep = "/"
 
-def user_input():
-    colorprint("\n┌──(",Colors.magenta,Background.none,False,False,False)
-    colorprint(co_user,Colors.magenta,Background.none,False,True,False)
-    colorprint(")-[",Colors.magenta,Background.none,False,False,False)
-    colorprint(action_rep,Colors.cyan,Background.none,False,True,False)
-    colorprint("]",Colors.magenta,Background.none,False,False,True)
-    return(colorinput("└─} ",Colors.magenta,Background.none,False,False))
+def help():
+    def printhelp(nom,doc):
+        colorprint(nom,Colors.magenta,Background.none,False,True,False)
+        colorprint(f": {doc}",Colors.magenta,Background.none,False,False,True)
+    printhelp("clear","efface la console")
+    printhelp("bvn","affiche l'écran de bienvenue")
+    printhelp("ls","affiche le contenu dossier de travail ou du dossier spécifier")
+    printhelp("cd","change le dossier de travail")
+    printhelp("help","affiche cette aide")
 
 ##### setup #####
 
@@ -89,7 +113,9 @@ def interpreteur(ipt):
     elif rc == "bvn": bvn()
     elif rc == "ls": ls()
     elif rc == "cd": cd()
+    elif rc == "help": help()
     elif rc != "": erreur("001")
+
 
 while True:
     interpreteur(user_input())
