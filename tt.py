@@ -14,14 +14,16 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-version = "v0.0.3"
+tt_version = "v0.0.4"
 
 ##### importation ####
+from urllib.request import urlopen
 from mod.ColorPrint import Background, Colors, colorprint, colorinput
 from mod.sunbreaker import sunbreaker
 from mod.login import StartLogin
 import mod.cytron as cy
 from os import system, name
+from mod.updater import update as start_update, road
 
 ##### erreur #####
 def erreur(num,text="commande inconnue"):
@@ -84,15 +86,69 @@ def cd():
             except: erreur("002","dossier de destination invalide, ici -> "+to_test)
     else: action_rep = "/"
 
+def version():
+    def printversion(nom,doc):
+        colorprint(nom,Colors.magenta,Background.none,False,True,False)
+        colorprint(f": {doc}",Colors.magenta,Background.none,False,False,True)
+    printversion("terminal tools",tt_version)
+    printversion("cytron",cy.version())
+
+def update():
+    def u_dl():
+        try: start_update(com[2],com[3])
+        except: print("url err")
+
+    def u_help():
+        print()
+
+    def u_road():
+        if com[2] in ["list", "l"]:
+            print(road)
+        elif com[2] in ["add", "a"]:
+            road.append(com[3])
+        elif com[2] in ["del", "d"]:
+            try: road.remove(com[3])
+            except: print("url err")
+        elif com[2] in ["read", "r"]:
+            for r in road:
+                print(f"road: {r}")
+                for l in urlopen(r).read().decode("utf-8").split("\n"):
+                    print(f"  {l}")
+        else: print("arg err")
+
+    def u_rdl():
+        done = False
+        for r in road:
+            for l in urlopen(r).read().decode("utf-8").split("\n"):
+                l = str(l).split(",")
+                if l[0] == com[3]:
+                    start_update(com[2],l[1].strip())
+                    done = True
+                    break
+        if not done: print("name err")
+
+    for _ in range(10 - len(com)): com.append("")
+    commande = com[1]
+    if commande == "dl":
+        u_dl()
+    elif commande in ["help", "h"]:
+        u_help()
+    elif commande in ["road", "r"]:
+        u_road()
+    elif commande == "rdl":
+        u_rdl()
+    else: print("cmd err")
+
 def help():
     def printhelp(nom,doc):
         colorprint(nom,Colors.magenta,Background.none,False,True,False)
         colorprint(f": {doc}",Colors.magenta,Background.none,False,False,True)
-    printhelp("clear","efface la console")
     printhelp("bvn","affiche l'écran de bienvenue")
-    printhelp("ls","affiche le contenu dossier de travail ou du dossier spécifier")
     printhelp("cd","change le dossier de travail")
+    printhelp("clear","efface la console")
     printhelp("help","affiche cette aide")
+    printhelp("ls","affiche le contenu dossier de travail ou du dossier spécifier")
+    printhelp("verion","affiche la version de terminal tools et des modules")
 
 ##### setup #####
 
@@ -109,11 +165,13 @@ def interpreteur(ipt):
     global com
     com = str(ipt).split(" ")
     rc = com[0] #root commande
-    if rc in ["clear", "cls"]: clear()
-    elif rc == "bvn": bvn()
-    elif rc == "ls": ls()
+    if rc == "bvn": bvn()
     elif rc == "cd": cd()
     elif rc == "help": help()
+    elif rc in ["clear", "cls"]: clear()
+    elif rc == "ls": ls()
+    elif rc == "update": update()
+    elif rc == "version": version()
     elif rc != "": erreur("001")
 
 
