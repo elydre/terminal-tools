@@ -1,7 +1,7 @@
 ##### importation ####
-from mod.ColorPrint import Background, Colors, colorprint, colorinput
-from mod.sunbreaker import sunbreaker
-import mod.cytron as cy
+from system.mod.ColorPrint import Background, Colors, colorprint, colorinput
+from system.mod.sunbreaker import sunbreaker
+import system.mod.cytron as cy
 from os import system, name
 
 ##### setup #####
@@ -9,7 +9,7 @@ global logins, bad, islogin
 logins = []
 islogin_l = []
 bad = []
-login_liste = cy.cy_rfil_rela("/sys/","login.txt")
+login_liste = cy.cy_rfil_rela("/system/","login.txt")
 print(cy.cy_ls("/"))
 user_liste = login_liste.split("\n")
 def clear():

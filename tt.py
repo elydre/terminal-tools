@@ -14,16 +14,16 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.4"
+tt_version = "v0.0.5"
 
 ##### importation ####
+import system.mod.cytron as cy
+from system.mod.ColorPrint import Background, Colors, colorprint, colorinput
+from system.mod.sunbreaker import sunbreaker
+from system.mod.login import StartLogin
+from system.mod.updater import update as start_update, road
 from urllib.request import urlopen
-from mod.ColorPrint import Background, Colors, colorprint, colorinput
-from mod.sunbreaker import sunbreaker
-from mod.login import StartLogin
-import mod.cytron as cy
 from os import system, name
-from mod.updater import update as start_update, road
 
 ##### erreur #####
 
@@ -102,13 +102,21 @@ def version():
     printversion("terminal tools",tt_version)
     printversion("cytron",cy.version())
 
-def update():
+def update():  # sourcery no-metrics
     def u_dl():
-        try: start_update(com[2],com[3])
+        try: start_update(action_rep+com[2],com[3])
         except: erreur("003",com[3])
 
     def u_help():
-        print()
+        def printhelp(nom,doc):
+            colorprint(nom,Colors.magenta,Background.none,False,True,False)
+            colorprint(f": {doc}",Colors.magenta,Background.none,False,False,True)
+        printhelp("update dl <chemin> <url>","télécharger un registre directement depuis son url")
+        printhelp("update rdl <chemin> <nom>", "télécharger un registre depuis les fichier de redirection")
+        printhelp("update road list", "afficher la liste")
+        printhelp("update road add <nom>", "ajouter une url de la liste")
+        printhelp("update road del <nom>", "supprimer une url de la liste")
+        printhelp("update road read", "lire les fichiers de redirection")
 
     def u_road():
         if com[2] in ["list", "l"]:
@@ -131,7 +139,7 @@ def update():
             for l in urlopen(r).read().decode("utf-8").split("\n"):
                 l = str(l).split(",")
                 if l[0] == com[3]:
-                    start_update(com[2],l[1].strip())
+                    start_update(action_rep+com[2],l[1].strip())
                     done = True
                     break
         if not done: erreur("005",com[3])
@@ -153,10 +161,11 @@ def help():
         colorprint(nom,Colors.magenta,Background.none,False,True,False)
         colorprint(f": {doc}",Colors.magenta,Background.none,False,False,True)
     printhelp("bvn","affiche l'écran de bienvenue")
-    printhelp("cd","change le dossier de travail")
+    printhelp("cd <chemin>","change le dossier de travail")
     printhelp("clear","efface la console")
     printhelp("help","affiche cette aide")
-    printhelp("ls","affiche le contenu dossier de travail ou du dossier spécifier")
+    printhelp("ls [chemin]","affiche le contenu dossier de travail ou du dossier spécifier")
+    printhelp("update <*arg>","lance le systeme de mise a jour (update help)")
     printhelp("verion","affiche la version de terminal tools et des modules")
 
 ##### setup #####
