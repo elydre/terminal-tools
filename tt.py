@@ -26,9 +26,18 @@ from os import system, name
 from mod.updater import update as start_update, road
 
 ##### erreur #####
-def erreur(num,text="commande inconnue"):
-    colorprint("Erreur "+num,Colors.rouge,Background.none,False,True,False)
-    colorprint(": "+text,Colors.rouge,Background.none,False,False,True)
+
+erreurs = {
+"001": "commande inconnue",
+"002": "dossier de destination invalide, ici -> {}",
+"003": "url invalide, ici -> {}",
+"004": "argument inconnu, ici -> {}",
+"005": "registre {} non trouvé dans les roads"
+}
+
+def erreur(e,*arg):
+    colorprint("Erreur "+e,Colors.rouge,Background.none,False,True,False)
+    colorprint(": " + erreurs[e].format(*arg),Colors.rouge,Background.none,False,False,True)
 
 ##### commandes #####
 
@@ -83,7 +92,7 @@ def cd():
             try:
                 cy.cy_ls(to_test)
                 action_rep = to_test
-            except: erreur("002","dossier de destination invalide, ici -> "+to_test)
+            except: erreur("002",to_test)
     else: action_rep = "/"
 
 def version():
@@ -96,25 +105,25 @@ def version():
 def update():
     def u_dl():
         try: start_update(com[2],com[3])
-        except: print("url err")
+        except: erreur("003",com[3])
 
     def u_help():
         print()
 
     def u_road():
         if com[2] in ["list", "l"]:
-            print(road)
+            colorprint(str(road),Colors.magenta)
         elif com[2] in ["add", "a"]:
             road.append(com[3])
         elif com[2] in ["del", "d"]:
             try: road.remove(com[3])
-            except: print("url err")
+            except: erreur("003",com[3])
         elif com[2] in ["read", "r"]:
             for r in road:
-                print(f"road: {r}")
+                colorprint(f"road: {r}",Colors.magenta, ligne = True)
                 for l in urlopen(r).read().decode("utf-8").split("\n"):
-                    print(f"  {l}")
-        else: print("arg err")
+                    colorprint(f"  {l}",Colors.magenta)
+        else: erreur("004",com[2])
 
     def u_rdl():
         done = False
@@ -125,19 +134,19 @@ def update():
                     start_update(com[2],l[1].strip())
                     done = True
                     break
-        if not done: print("name err")
+        if not done: erreur("005",com[3])
 
     for _ in range(10 - len(com)): com.append("")
     commande = com[1]
     if commande == "dl":
         u_dl()
-    elif commande in ["help", "h"]:
+    elif commande in ["help", "h", ""]:
         u_help()
     elif commande in ["road", "r"]:
         u_road()
     elif commande == "rdl":
         u_rdl()
-    else: print("cmd err")
+    else: erreur("004",commande)
 
 def help():
     def printhelp(nom,doc):
