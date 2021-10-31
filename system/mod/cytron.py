@@ -23,7 +23,7 @@ from _thread import start_new_thread
 ### definition des variables
 global path_v, version, console_o
 
-version_id = "cytron 13c"
+version_id = "cytron 14"
 
 console_o = False
 path_v = os.path.dirname(sys.argv[0])
@@ -134,3 +134,7 @@ def run(ipt):
     elif ipt[0] in ["aide", "help"]:              # aide
         return("version > affiche la version\npath    > affiche le chemain\nmkdir   > crée un dossier\nls      > affiche le contenue d'un dossier\nwget    > crée un fichier depuis le web\nmkfil   > créé un fichier\nrfil    > affiche le contenue d'un fichier\nhelp    > affiche l'aide")
     else: return("commande inconnu")                        # autres commandes
+
+if __name__ == "__main__":
+    console()
+    while 1: pass
