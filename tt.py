@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.7"
+tt_version = "v0.0.8"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -58,7 +58,7 @@ def bvn():
     colorprint(" sur Terminal Tools",Colors.magenta,Background.none,False,False,True)
     colorprint("Copyright (C) pf4. Tous droits réservés.\n",Colors.magenta,Background.none,False,False,True)
 
-def ls():
+def ls(com):
     try: rep = com[1]
     except: rep = "/"
     colorprint(cy.cy_path()+action_rep,Colors.vert)
@@ -71,7 +71,7 @@ def ls():
         if len(element.split(".")) > 1: colorprint(element,Colors.jaune)
         else: colorprint(element,Colors.bleu,Background.none)
 
-def cd():
+def cd(com):
     if len(com) > 1:
         global action_rep
         loc = ""
@@ -102,7 +102,7 @@ def version():
     printversion("terminal tools",tt_version)
     printversion("cytron",cy.version())
 
-def update():  # sourcery no-metrics
+def update(com):  # sourcery no-metrics
     def u_dl():
         try: start_update(action_rep+com[2],com[3])
         except: erreur("003",com[3])
@@ -156,8 +156,11 @@ def update():  # sourcery no-metrics
         u_rdl()
     else: erreur("004",commande)
 
-def sunbreaker():
+def sunbreaker(com):
     colorprint(str(sb("".join(x+" "for x in com[1:len(com)]).strip())), Colors.magenta, ligne = True)
+
+def tt_update():
+    update(["update","rdl","/","https://raw.githubusercontent.com/pf4/terminal-tools/master/system/update.txt"])
 
 def help():
     def printhelp(nom,doc):
@@ -184,17 +187,17 @@ bvn()
 ##### debut du terminal #####
 
 def interpreteur(ipt):
-    global com
     com = str(ipt).split(" ")
     rc = com[0] #root commande
     if rc == "bvn": bvn()
-    elif rc == "cd": cd()
+    elif rc == "cd": cd(com)
     elif rc in ["clear", "cls"]: clear()
     elif rc == "help": help()
-    elif rc == "ls": ls()
-    elif rc in ["sunbreaker", "sb"]: sunbreaker()
-    elif rc == "update": update()
+    elif rc == "ls": ls(com)
+    elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
+    elif rc == "update": update(com)
     elif rc == "version": version()
+    elif rc == "tt-update": tt_update()
     elif rc != "": erreur("001")
 
 
