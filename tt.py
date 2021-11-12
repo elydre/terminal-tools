@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.8"
+tt_version = "v0.0.8b"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -172,8 +172,9 @@ def help():
     printhelp("help","affiche cette aide")
     printhelp("ls [chemin]","affiche le contenu dossier de travail ou du dossier spécifier")
     printhelp("sunbreaker <str>","afficher le break du texte entré")
+    printhelp("tt-update","lance la misse à jour de terminal-tools")
     printhelp("update <*arg>","lance le systeme de mise a jour (update help)")
-    printhelp("verion","affiche la version de terminal tools et des modules")
+    printhelp("verion","affiche la version de terminal-tools et des modules")
 
 ##### setup #####
 
