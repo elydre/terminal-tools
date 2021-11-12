@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.9"
+tt_version = "v0.0.10"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -163,6 +163,14 @@ def sunbreaker(com):
 def tt_update():
     update("/",["update","rdl","/","tt"])
 
+def cy_run(com):
+    commande = com[1:]
+    if len(commande) > 0:
+        retour = str(cy.run(commande))
+        colorprint(retour,Colors.magenta)
+    else:
+        erreur("006")
+
 def mkdir(com):
     if len(com) > 1:
         for e in com[1:]:
@@ -175,6 +183,7 @@ def help():
         colorprint(f": {doc}",Colors.magenta,Background.none,False,False,True)
     printhelp("bvn","affiche l'écran de bienvenue")
     printhelp("cd [chemin]","change le dossier de travail")
+    printhelp("cy <*arg>","lance des commandes cytron")
     printhelp("clear","efface la console")
     printhelp("help","affiche cette aide")
     printhelp("ls [chemin]","affiche le contenu dossier de travail ou du dossier spécifier")
@@ -200,6 +209,7 @@ def interpreteur(ipt):
     rc = com[0] #root commande
     if rc == "bvn": bvn()
     elif rc == "cd": cd(com)
+    elif rc == "cy": cy_run(com)
     elif rc in ["clear", "cls"]: clear()
     elif rc == "help": help()
     elif rc == "ls": ls(com)
