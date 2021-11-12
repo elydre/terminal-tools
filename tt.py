@@ -160,7 +160,7 @@ def sunbreaker(com):
     colorprint(str(sb("".join(x+" "for x in com[1:len(com)]).strip())), Colors.magenta, ligne = True)
 
 def tt_update():
-    update(["update","rdl","/","https://raw.githubusercontent.com/pf4/terminal-tools/master/system/update.txt"])
+    update(["update","rdl","/","https://raw.githubusercontent.com/pf4-DEV/terminal-tools/master/system/update.txt"])
 
 def help():
     def printhelp(nom,doc):
