@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.8c"
+tt_version = "v0.0.8d"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -102,9 +102,9 @@ def version():
     printversion("terminal tools",tt_version)
     printversion("cytron",cy.version())
 
-def update(com):  # sourcery no-metrics
+def update(ar,com):  # sourcery no-metrics
     def u_dl():
-        try: start_update(action_rep+com[2],com[3])
+        try: start_update(ar+com[2],com[3])
         except: erreur("003",com[3])
 
     def u_help():
@@ -139,7 +139,7 @@ def update(com):  # sourcery no-metrics
             for l in urlopen(r).read().decode("utf-8").split("\n"):
                 l = str(l).split(",")
                 if l[0] == com[3]:
-                    start_update(action_rep+com[2],l[1].strip())
+                    start_update(ar+com[2],l[1].strip())
                     done = True
                     break
         if not done: erreur("005",com[3])
@@ -160,7 +160,7 @@ def sunbreaker(com):
     colorprint(str(sb("".join(x+" "for x in com[1:len(com)]).strip())), Colors.magenta, ligne = True)
 
 def tt_update():
-    update(["update","rdl","/","tt"])
+    update("/",["update","rdl","/","tt"])
 
 def help():
     def printhelp(nom,doc):
@@ -198,7 +198,7 @@ def interpreteur(ipt):
     elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
     elif rc == "tt-version": version()
     elif rc == "tt-update": tt_update()
-    elif rc == "update": update(com)
+    elif rc == "update": update(action_rep,com)
     elif rc != "": erreur("001")
 
 
