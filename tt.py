@@ -178,6 +178,7 @@ def help():
     printhelp("clear","efface la console")
     printhelp("help","affiche cette aide")
     printhelp("ls [chemin]","affiche le contenu dossier de travail ou du dossier spécifier")
+    printhelp("mkdir <nom>","créé le dossier du nom spécifié")
     printhelp("sunbreaker <str>","afficher le break du texte entré")
     printhelp("tt-update","lance la misse à jour de terminal-tools")
     printhelp("tt-verion","affiche la version de terminal-tools et des modules")
