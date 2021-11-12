@@ -195,7 +195,7 @@ bvn()
 ##### debut du terminal #####
 
 def interpreteur(ipt):
-    com = [c.strip() for c in str(ipt).split(" ")]
+    com = [c for c in str(ipt).split(" ") if c != ""]
     rc = com[0] #root commande
     if rc == "bvn": bvn()
     elif rc == "cd": cd(com)
