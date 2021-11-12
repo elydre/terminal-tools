@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.8d"
+tt_version = "v0.0.9"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -32,7 +32,8 @@ erreurs = {
 "002": "dossier de destination invalide, ici -> {}",
 "003": "url invalide, ici -> {}",
 "004": "argument inconnu, ici -> {}",
-"005": "registre {} non trouvé dans les roads"
+"005": "registre {} non trouvé dans les roads",
+"006": "La commande nécessite un argument pour fonctionné"
 }
 
 def erreur(e,*arg):
@@ -162,19 +163,25 @@ def sunbreaker(com):
 def tt_update():
     update("/",["update","rdl","/","tt"])
 
+def mkdir(com):
+    if len(com) > 1:
+        for e in com[1:]:
+            cy.mkdir(action_rep, e)
+    else: erreur("006")
+
 def help():
     def printhelp(nom,doc):
         colorprint(nom,Colors.magenta,Background.none,False,True,False)
         colorprint(f": {doc}",Colors.magenta,Background.none,False,False,True)
     printhelp("bvn","affiche l'écran de bienvenue")
-    printhelp("cd <chemin>","change le dossier de travail")
+    printhelp("cd [chemin]","change le dossier de travail")
     printhelp("clear","efface la console")
     printhelp("help","affiche cette aide")
     printhelp("ls [chemin]","affiche le contenu dossier de travail ou du dossier spécifier")
     printhelp("sunbreaker <str>","afficher le break du texte entré")
     printhelp("tt-update","lance la misse à jour de terminal-tools")
-    printhelp("update <*arg>","lance le systeme de mise a jour (update help)")
     printhelp("tt-verion","affiche la version de terminal-tools et des modules")
+    printhelp("update <*arg>","lance le systeme de mise a jour (update help)")
 
 ##### setup #####
 
@@ -188,13 +195,14 @@ bvn()
 ##### debut du terminal #####
 
 def interpreteur(ipt):
-    com = str(ipt).split(" ")
+    com = [c.strip() for c in str(ipt).split(" ")]
     rc = com[0] #root commande
     if rc == "bvn": bvn()
     elif rc == "cd": cd(com)
     elif rc in ["clear", "cls"]: clear()
     elif rc == "help": help()
     elif rc == "ls": ls(com)
+    elif rc == "mkdir": mkdir(com)
     elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
     elif rc == "tt-version": version()
     elif rc == "tt-update": tt_update()
