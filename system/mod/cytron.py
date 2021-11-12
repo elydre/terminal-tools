@@ -128,7 +128,7 @@ def run(ipt):
         except: return("erreur: 'chem rela'")
     elif ipt[0] == "rfil":                                  # rfil
         try: return(rfil_rela(ipt[1], ipt[2]))
-        except: return("erreur: 'nom'")
+        except: return("erreur: 'chem rela + nom'")
     elif ipt[0] == "exit":                                  # exit
         return("exit")
     elif ipt[0] in ["aide", "help"]:              # aide

@@ -24,6 +24,7 @@ from system.mod.login import StartLogin
 from system.mod.updater import update as start_update, road
 from urllib.request import urlopen
 from os import system, name
+from time import time as actual_time
 
 ##### erreur #####
 
@@ -42,9 +43,11 @@ def erreur(e,*arg):
 
 ##### commandes #####
 
-def user_input():
+def user_input(time):
     colorprint("\n┌──(",Colors.magenta,Background.none,False,False,False)
     colorprint(co_user,Colors.magenta,Background.none,False,True,False)
+    colorprint(" • ",Colors.magenta,Background.none,False,False,False)
+    colorprint(str(round(actual_time() - time,2)),Colors.magenta,Background.none,False,True,False)
     colorprint(")-[",Colors.magenta,Background.none,False,False,False)
     colorprint(action_rep,Colors.cyan,Background.none,False,True,False)
     colorprint("]",Colors.magenta,Background.none,False,False,True)
@@ -200,26 +203,29 @@ action_rep = "/"
 
 global co_user
 co_user = StartLogin()
+time = actual_time()
 bvn()
 
 ##### debut du terminal #####
 
 def interpreteur(ipt):
+    time = actual_time()
     com = [c for c in str(ipt).split(" ") if c != ""]
-    rc = com[0] #root commande
-    if rc == "bvn": bvn()
-    elif rc == "cd": cd(com)
-    elif rc == "cy": cy_run(com)
-    elif rc in ["clear", "cls"]: clear()
-    elif rc == "help": help()
-    elif rc == "ls": ls(com)
-    elif rc == "mkdir": mkdir(com)
-    elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
-    elif rc == "tt-version": version()
-    elif rc == "tt-update": tt_update()
-    elif rc == "update": update(action_rep,com)
-    elif rc != "": erreur("001")
-
+    if not com: erreur("001")
+    else:
+        rc = com[0] #root commande
+        if rc == "bvn": bvn()
+        elif rc == "cd": cd(com)
+        elif rc == "cy": cy_run(com)
+        elif rc in ["clear", "cls"]: clear()
+        elif rc == "help": help()
+        elif rc == "ls": ls(com)
+        elif rc == "mkdir": mkdir(com)
+        elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
+        elif rc == "tt-version": version()
+        elif rc == "tt-update": tt_update()
+        elif rc == "update": update(action_rep,com)
+    return time
 
 while True:
-    interpreteur(user_input())
+    time = interpreteur(user_input(time))
