@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.8b"
+tt_version = "v0.0.8c"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -174,7 +174,7 @@ def help():
     printhelp("sunbreaker <str>","afficher le break du texte entré")
     printhelp("tt-update","lance la misse à jour de terminal-tools")
     printhelp("update <*arg>","lance le systeme de mise a jour (update help)")
-    printhelp("verion","affiche la version de terminal-tools et des modules")
+    printhelp("tt-verion","affiche la version de terminal-tools et des modules")
 
 ##### setup #####
 
@@ -196,9 +196,9 @@ def interpreteur(ipt):
     elif rc == "help": help()
     elif rc == "ls": ls(com)
     elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
-    elif rc == "update": update(com)
-    elif rc == "version": version()
+    elif rc == "tt-version": version()
     elif rc == "tt-update": tt_update()
+    elif rc == "update": update(com)
     elif rc != "": erreur("001")
 
 
