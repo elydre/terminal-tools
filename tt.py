@@ -224,6 +224,7 @@ def interpreteur(ipt):
         elif rc == "tt-version": version()
         elif rc == "tt-update": tt_update()
         elif rc == "update": update(action_rep,com)
+        else: erreur("001")
     return time
 
 while True:
