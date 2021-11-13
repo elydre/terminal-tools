@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.10"
+tt_version = "v0.0.10b"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -211,8 +211,7 @@ bvn()
 def interpreteur(ipt):
     time = actual_time()
     com = [c for c in str(ipt).split(" ") if c != ""]
-    if not com: erreur("001")
-    else:
+    if com:
         rc = com[0] #root commande
         if rc == "bvn": bvn()
         elif rc == "cd": cd(com)
