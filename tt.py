@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.10b"
+tt_version = "v0.0.11"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -34,7 +34,8 @@ erreurs = {
 "003": "url invalide, ici -> {}",
 "004": "argument inconnu, ici -> {}",
 "005": "registre {} non trouvé dans les roads",
-"006": "La commande nécessite un argument pour fonctionné"
+"006": "La commande nécessite un/des argument(s) pour fonctionné",
+"007": "pas de connection internet"
 }
 
 def erreur(e,*arg):
@@ -147,18 +148,19 @@ def update(ar,com):  # sourcery no-metrics
                     done = True
                     break
         if not done: erreur("005",com[3])
-
-    for _ in range(10 - len(com)): com.append("")
-    commande = com[1]
-    if commande == "dl":
-        u_dl()
-    elif commande in ["help", "h", ""]:
-        u_help()
-    elif commande in ["road", "r"]:
-        u_road()
-    elif commande == "rdl":
-        u_rdl()
-    else: erreur("004",commande)
+    if cy.check_internet():
+        for _ in range(10 - len(com)): com.append("")
+        commande = com[1]
+        if commande == "dl":
+            u_dl()
+        elif commande in ["help", "h", ""]:
+            u_help()
+        elif commande in ["road", "r"]:
+            u_road()
+        elif commande == "rdl":
+            u_rdl()
+        else: erreur("004",commande)
+    else: erreur("007")
 
 def sunbreaker(com):
     colorprint(str(sb("".join(x+" "for x in com[1:len(com)]).strip())), Colors.magenta, ligne = True)
@@ -180,6 +182,11 @@ def mkdir(com):
             cy.mkdir(action_rep, e)
     else: erreur("006")
 
+def wget(com):
+    if len(com) > 1:
+        cy.wget(action_rep, com[1], com[2])
+    else: erreur("006")
+
 def help():
     def printhelp(nom,doc):
         colorprint(nom,Colors.magenta,Background.none,False,True,False)
@@ -195,6 +202,7 @@ def help():
     printhelp("tt-update","lance la misse à jour de terminal-tools")
     printhelp("tt-verion","affiche la version de terminal-tools et des modules")
     printhelp("update <*arg>","lance le systeme de mise a jour (update help)")
+    printhelp("wget <chemin> <url>","télécharge un fichier depuis une url")
 
 ##### setup #####
 
@@ -210,21 +218,27 @@ bvn()
 
 def interpreteur(ipt):
     time = actual_time()
-    com = [c for c in str(ipt).split(" ") if c != ""]
-    if com:
-        rc = com[0] #root commande
-        if rc == "bvn": bvn()
-        elif rc == "cd": cd(com)
-        elif rc == "cy": cy_run(com)
-        elif rc in ["clear", "cls"]: clear()
-        elif rc == "help": help()
-        elif rc == "ls": ls(com)
-        elif rc == "mkdir": mkdir(com)
-        elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
-        elif rc == "tt-version": version()
-        elif rc == "tt-update": tt_update()
-        elif rc == "update": update(action_rep,com)
-        else: erreur("001")
+    for i in ipt.split("&&"):
+        com = [c for c in str(i).split(" ") if c != ""]
+        if len(ipt.split("&&")) > 1:
+            colorprint("──} ",Colors.magenta,Background.none,False,False,False)
+            colorprint(i.strip(),Colors.magenta,Background.none,False,True,True)
+
+        if com:
+            rc = com[0] #root commande
+            if rc == "bvn": bvn()
+            elif rc == "cd": cd(com)
+            elif rc == "cy": cy_run(com)
+            elif rc in ["clear", "cls"]: clear()
+            elif rc == "help": help()
+            elif rc == "ls": ls(com)
+            elif rc == "mkdir": mkdir(com)
+            elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
+            elif rc == "tt-version": version()
+            elif rc == "tt-update": tt_update()
+            elif rc == "update": update(action_rep,com)
+            elif rc == "wget": wget(com)
+            else: erreur("001")
     return time
 
 while True:
