@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.11"
+tt_version = "v0.0.11c"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -35,7 +35,8 @@ erreurs = {
 "004": "argument inconnu, ici -> {}",
 "005": "registre {} non trouvé dans les roads",
 "006": "La commande nécessite un/des argument(s) pour fonctionné",
-"007": "pas de connection internet"
+"007": "pas de connection internet",
+"008": "erreur d'excution"
 }
 
 def erreur(e,*arg):
@@ -184,7 +185,15 @@ def mkdir(com):
 
 def wget(com):
     if len(com) > 1:
-        cy.wget(action_rep, com[1], com[2])
+        if cy.wget(action_rep, com[1], com[2]) == "DONE":
+            colorprint("le fichier a été téléchargé!",Colors.magenta)
+
+    else: erreur("006")
+
+def py_exec(com):
+    if len(com) > 1:
+        try: exec("".join([c + " " for c in com[1:]]))
+        except: erreur("008")
     else: erreur("006")
 
 def help():
@@ -230,6 +239,7 @@ def interpreteur(ipt):
             elif rc == "cd": cd(com)
             elif rc == "cy": cy_run(com)
             elif rc in ["clear", "cls"]: clear()
+            elif rc == "exec": py_exec(com)
             elif rc == "help": help()
             elif rc == "ls": ls(com)
             elif rc == "mkdir": mkdir(com)
