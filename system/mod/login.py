@@ -1,5 +1,5 @@
 ##### importation ####
-from system.mod.ColorPrint import Background, Colors, colorprint, colorinput
+from system.mod.ColorPrint import colorprint, colorinput
 from system.mod.sunbreaker import sunbreaker
 import system.mod.cytron as cy
 from os import system, name
@@ -25,18 +25,18 @@ def done_bad_co(is_login = True, co_login_="" ,add=True, done = False):
         bad.append(done)
         islogin_l.append(is_login)
     for x in range(len(logins)):
-        if islogin_l[x]: colorprint("login",Colors.magenta)
-        else: colorprint("password",Colors.magenta)
-        colorprint("-} ",Colors.magenta,Background.none,False,False,False)
+        if islogin_l[x]: colorprint("login","darkpurple")
+        else: colorprint("password","darkpurple")
+        colorprint("-} ","litepurple")
         print(logins[x],end="")
         if islogin_l[x]:
             print()
-        elif bad[x]: colorprint(" √",Colors.vert)
-        else: colorprint(" x",Colors.rouge)
+        elif bad[x]: colorprint(" √","green")
+        else: colorprint(" x","red")
 
 def pw(co_login):
-    colorprint("password",Colors.magenta)
-    co_passw = colorinput("-} ",Colors.magenta)
+    colorprint("password","darkpurple")
+    co_passw = colorinput("-} ","darkpurple")
     done = False
     for user in user_liste:
         name, mdp = user.split("/")[0], user.split("/")[1]
@@ -52,8 +52,8 @@ def pw(co_login):
 
 def login():
     global USER
-    colorprint("login",Colors.magenta)
-    co_login = colorinput("-} ",Colors.magenta)
+    colorprint("login","darkpurple")
+    co_login = colorinput("-} ","darkpurple")
     USER = co_login
     logins.append(co_login)
     bad.append(True)

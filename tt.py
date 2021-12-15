@@ -18,7 +18,7 @@ tt_version = "v0.0.11c"
 
 ##### importation ####
 import system.mod.cytron as cy
-from system.mod.ColorPrint import Background, Colors, colorprint, colorinput
+from system.mod.ColorPrint import colorprint, colorinput, addcolor
 from system.mod.sunbreaker import sunbreaker as sb
 from system.mod.login import StartLogin
 from system.mod.updater import update as start_update, road
@@ -39,43 +39,46 @@ erreurs = {
 "008": "erreur d'excution"
 }
 
+addcolor("litepurple",(228,138,255))
+addcolor("darkpurple",(137,83,153))
+
 def erreur(e,*arg):
-    colorprint("Erreur "+e,Colors.rouge,Background.none,False,True,False)
-    colorprint(": " + erreurs[e].format(*arg),Colors.rouge,Background.none,False,False,True)
+    colorprint("Erreur "+e,"red","bk")
+    colorprint(": " + erreurs[e].format(*arg),"red")
 
 ##### commandes #####
 
 def user_input(time):
-    colorprint("\n┌──(",Colors.magenta,Background.none,False,False,False)
-    colorprint(co_user,Colors.magenta,Background.none,False,True,False)
-    colorprint(" • ",Colors.magenta,Background.none,False,False,False)
-    colorprint(str(round(actual_time() - time,2)),Colors.magenta,Background.none,False,True,False)
-    colorprint(")-[",Colors.magenta,Background.none,False,False,False)
-    colorprint(action_rep,Colors.cyan,Background.none,False,True,False)
-    colorprint("]",Colors.magenta,Background.none,False,False,True)
-    return(colorinput("└─} ",Colors.magenta,Background.none,False,False))
+    colorprint("\n┌──(","darkpurple","k")
+    colorprint(co_user,"litepurple","k")
+    colorprint(" • ","darkpurple","k")
+    colorprint(str(round(actual_time() - time,2)),"litepurple","k")
+    colorprint(")-[","darkpurple","k")
+    colorprint(action_rep,"cyan","k")
+    colorprint("]","darkpurple")
+    return(colorinput("└─} ","darkpurple"))
 
 def clear():
     system('cls' if name == 'nt' else 'clear')
 
 def bvn():
-    colorprint("\nbienvenue ",Colors.magenta,Background.none,False,False,False)
-    colorprint(co_user,Colors.magenta,Background.none,False,True,False)
-    colorprint(" sur Terminal Tools",Colors.magenta,Background.none,False,False,True)
-    colorprint("Copyright (C) pf4. Tous droits réservés.\n",Colors.magenta,Background.none,False,False,True)
+    colorprint("\nbienvenue ","darkpurple","k")
+    colorprint(co_user,"darkpurple","k")
+    colorprint(" sur Terminal Tools","darkpurple")
+    colorprint("Copyright (C) pf4. Tous droits réservés.\n","darkpurple")
 
 def ls(com):
     try: rep = com[1]
     except: rep = "/"
-    colorprint(cy.cy_path()+action_rep,Colors.vert)
-    colorprint("│",Colors.blanc)
+    colorprint(cy.cy_path()+action_rep,"green")
+    colorprint("│","white")
     liste_cont = cy.cy_ls(action_rep + "/" + rep)
     for x in range(len(liste_cont)):
         element = liste_cont[x]
-        if x == len(liste_cont)-1: colorprint("└─",Colors.blanc,Background.none,False,False,False)
-        else: colorprint("├─",Colors.blanc,Background.none,False,False,False)
-        if len(element.split(".")) > 1: colorprint(element,Colors.jaune)
-        else: colorprint(element,Colors.bleu,Background.none)
+        if x == len(liste_cont)-1: colorprint("└─","white","k")
+        else: colorprint("├─","white","k")
+        if len(element.split(".")) > 1: colorprint(element,"yellow")
+        else: colorprint(element,"blue")
 
 def cd(com):
     if len(com) > 1:
@@ -103,8 +106,8 @@ def cd(com):
 
 def version():
     def printversion(nom,doc):
-        colorprint(nom,Colors.magenta,Background.none,False,True,False)
-        colorprint(f": {doc}",Colors.magenta,Background.none,False,False,True)
+        colorprint(nom,"litepurple","k")
+        colorprint(f": {doc}","darkpurple")
     printversion("terminal tools",tt_version)
     printversion("cytron",cy.version())
 
@@ -115,8 +118,8 @@ def update(ar,com):  # sourcery no-metrics
 
     def u_help():
         def printhelp(nom,doc):
-            colorprint(nom,Colors.magenta,Background.none,False,True,False)
-            colorprint(f": {doc}",Colors.magenta,Background.none,False,False,True)
+            colorprint(nom,"litepurple","k")
+            colorprint(f": {doc}","darkpurple")
         printhelp("update dl <chemin> <url>","télécharger un registre directement depuis son url")
         printhelp("update rdl <chemin> <nom>", "télécharger un registre depuis les fichier de redirection")
         printhelp("update road list", "afficher la liste")
@@ -126,7 +129,7 @@ def update(ar,com):  # sourcery no-metrics
 
     def u_road():
         if com[2] in ["list", "l"]:
-            colorprint(str(road),Colors.magenta)
+            colorprint(str(road),"darkpurple")
         elif com[2] in ["add", "a"]:
             road.append(com[3])
         elif com[2] in ["del", "d"]:
@@ -134,9 +137,9 @@ def update(ar,com):  # sourcery no-metrics
             except: erreur("003",com[3])
         elif com[2] in ["read", "r"]:
             for r in road:
-                colorprint(f"road: {r}",Colors.magenta, ligne = True)
+                colorprint(f"road: {r}","darkpurple")
                 for l in urlopen(r).read().decode("utf-8").split("\n"):
-                    colorprint(f"  {l}",Colors.magenta)
+                    colorprint(f"  {l}","darkpurple")
         else: erreur("004",com[2])
 
     def u_rdl():
@@ -164,7 +167,7 @@ def update(ar,com):  # sourcery no-metrics
     else: erreur("007")
 
 def sunbreaker(com):
-    colorprint(str(sb("".join(x+" "for x in com[1:len(com)]).strip())), Colors.magenta, ligne = True)
+    colorprint(str(sb("".join(x+" "for x in com[1:len(com)]).strip())), "darkpurple")
 
 def tt_update():
     update("/",["update","rdl","/","tt"])
@@ -173,7 +176,7 @@ def cy_run(com):
     commande = com[1:]
     if len(commande) > 0:
         retour = str(cy.run(commande))
-        colorprint(retour,Colors.magenta)
+        colorprint(retour,"darkpurple")
     else:
         erreur("006")
 
@@ -186,7 +189,7 @@ def mkdir(com):
 def wget(com):
     if len(com) > 1:
         if cy.wget(action_rep, com[1], com[2]) == "DONE":
-            colorprint("le fichier a été téléchargé!",Colors.magenta)
+            colorprint("le fichier a été téléchargé!","darkpurple")
 
     else: erreur("006")
 
@@ -198,8 +201,8 @@ def py_exec(com):
 
 def help():
     def printhelp(nom,doc):
-        colorprint(nom,Colors.magenta,Background.none,False,True,False)
-        colorprint(f": {doc}",Colors.magenta,Background.none,False,False,True)
+        colorprint(nom,"litepurple","k")
+        colorprint(f": {doc}","darkpurple")
     printhelp("bvn","affiche l'écran de bienvenue")
     printhelp("cd [chemin]","change le dossier de travail")
     printhelp("cy <*arg>","lance des commandes cytron")
@@ -230,8 +233,8 @@ def interpreteur(ipt):
     for i in ipt.split("&&"):
         com = [c for c in str(i).split(" ") if c != ""]
         if len(ipt.split("&&")) > 1:
-            colorprint("──} ",Colors.magenta,Background.none,False,False,False)
-            colorprint(i.strip(),Colors.magenta,Background.none,False,True,True)
+            colorprint("──} ","darkpurple")
+            colorprint(i.strip(),"darkpurple", "k")
 
         if com:
             rc = com[0] #root commande
