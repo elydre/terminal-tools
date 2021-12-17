@@ -27,12 +27,12 @@ def done_bad_co(is_login = True, co_login_="" ,add=True, done = False):
     for x in range(len(logins)):
         if islogin_l[x]: colorprint("login","darkpurple")
         else: colorprint("password","darkpurple")
-        colorprint("-} ","litepurple")
+        colorprint("-} ","darkpurple", "k")
         print(logins[x],end="")
-        if islogin_l[x]:
-            print()
-        elif bad[x]: colorprint(" √","green")
-        else: colorprint(" x","red")
+        if islogin_l[x]: pass
+        elif bad[x]: colorprint(" √","green","k")
+        else: colorprint(" x","red","k")
+        print("\n")
 
 def pw(co_login):
     colorprint("password","darkpurple")
@@ -51,13 +51,17 @@ def pw(co_login):
         login()
 
 def login():
+    co_login = ""
     global USER
-    colorprint("login","darkpurple")
-    co_login = colorinput("-} ","darkpurple")
-    USER = co_login
-    logins.append(co_login)
-    bad.append(True)
-    islogin_l.append(True)
+    while co_login == "":
+        colorprint("login","darkpurple")
+        co_login = colorinput("-} ","darkpurple")
+        print()
+        USER = co_login
+        logins.append(co_login)
+        bad.append(True)
+        islogin_l.append(True)
+
     if sunbreaker(co_login) != 188326779898774147196118067464521:
         pw(co_login)
 

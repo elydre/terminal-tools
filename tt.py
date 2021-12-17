@@ -18,7 +18,7 @@ tt_version = "v0.0.11c"
 
 ##### importation ####
 import system.mod.cytron as cy
-from system.mod.ColorPrint import colorprint, colorinput, addcolor
+from system.mod.ColorPrint import colorprint, colorinput, setcolor
 from system.mod.sunbreaker import sunbreaker as sb
 from system.mod.login import StartLogin
 from system.mod.updater import update as start_update, road
@@ -39,12 +39,14 @@ erreurs = {
 "008": "erreur d'excution"
 }
 
-addcolor("litepurple",(228,138,255))
-addcolor("darkpurple",(137,83,153))
+setcolor("litepurple", (228, 138, 255))
+setcolor("darkpurple", (137,  83, 153))
+setcolor("litered",    (228,  86,  73))
+setcolor("darkred",    (178,  36,  23))
 
 def erreur(e,*arg):
-    colorprint("Erreur "+e,"red","bk")
-    colorprint(": " + erreurs[e].format(*arg),"red")
+    colorprint("Erreur "+e,"litered", "k")
+    colorprint(": " + erreurs[e].format(*arg),"darkred")
 
 ##### commandes #####
 
@@ -63,7 +65,7 @@ def clear():
 
 def bvn():
     colorprint("\nbienvenue ","darkpurple","k")
-    colorprint(co_user,"darkpurple","k")
+    colorprint(co_user,"litepurple","k")
     colorprint(" sur Terminal Tools","darkpurple")
     colorprint("Copyright (C) pf4. Tous droits réservés.\n","darkpurple")
 
