@@ -242,8 +242,8 @@ def interpreteur(ipt):
     for i in ipt.split("&&"):
         com = [c for c in str(i).split(" ") if c != ""]
         if len(ipt.split("&&")) > 1:
-            colorprint("──} ","darkpurple")
-            colorprint(i.strip(),"darkpurple", "k")
+            colorprint("──} ","darkpurple", "k")
+            colorprint(i.strip(),"darkpurple")
 
         if com:
             rc = com[0] #root commande
