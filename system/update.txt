@@ -5,6 +5,6 @@ mkd /system/mod
 wgt /system/mod/cytron.py, https://raw.githubusercontent.com/pf4-DEV/cytron/main/cytron.py
 wgt /system/mod/ColorPrint.py, https://raw.githubusercontent.com/pf4-DEV/Color-Printer/main/ColorPrint.py
 wgt /system/mod/updater.py, https://raw.githubusercontent.com/pf4-DEV/online-update/main/updater.py
-wgt /system/mod/sunbreaker.py, https://raw.githubusercontent.com/pf4-DEV/sun-breaker/main/sunbreaker.py
+wgt /system/mod/sunbreaker.py, https://raw.githubusercontent.com/pf4-DEV/sun-breaker/main/sun-breaker/sunbreaker.py
 wgt /system/mod/login.py, https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/mod/login.py
 wgt /system/login.txt, https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/login.txt
