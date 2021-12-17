@@ -14,11 +14,11 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.11c"
+tt_version = "v0.0.13"
 
 ##### importation ####
 import system.mod.cytron as cy
-from system.mod.ColorPrint import colorprint, colorinput, setcolor
+from system.mod.ColorPrint import colorprint, colorinput, setcolor, version as cp_version
 from system.mod.sunbreaker import sunbreaker as sb
 from system.mod.login import StartLogin, login_setup
 from system.mod.updater import update as start_update, road
@@ -113,6 +113,7 @@ def version():
         colorprint(f": {doc}","dark")
     printversion("terminal tools",tt_version)
     printversion("cytron",cy.version())
+    printversion("colorprint",cp_version)
 
 def update(ar,com):  # sourcery no-metrics
     def u_dl():
