@@ -27,9 +27,9 @@ def done_bad_co(is_login = True, co_login_="" ,add=True, done = False):
         bad.append(done)
         islogin_l.append(is_login)
     for x in range(len(logins)):
-        if islogin_l[x]: colorprint("login","darkpurple")
-        else: colorprint("password","darkpurple")
-        colorprint("-} ","darkpurple", "k")
+        if islogin_l[x]: colorprint("login","dark")
+        else: colorprint("password","dark")
+        colorprint("-} ","dark", "k")
         print(logins[x],end="")
         if islogin_l[x]: pass
         elif bad[x]: colorprint(" √","green","k")
@@ -37,8 +37,8 @@ def done_bad_co(is_login = True, co_login_="" ,add=True, done = False):
         print("\n")
 
 def pw(co_login):
-    colorprint("password","darkpurple")
-    co_passw = colorinput("-} ","darkpurple")
+    colorprint("password","dark")
+    co_passw = colorinput("-} ","dark")
     done = False
     for user in user_liste:
         name, mdp = user.split("/")[0], user.split("/")[1]
@@ -56,8 +56,8 @@ def login():
     co_login = ""
     global USER
     while co_login == "":
-        colorprint("login","darkpurple")
-        co_login = colorinput("-} ","darkpurple")
+        colorprint("login","dark")
+        co_login = colorinput("-} ","dark")
         print()
         USER = co_login
         logins.append(co_login)
