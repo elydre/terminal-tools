@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.15"
+tt_version = "v0.0.16"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -28,6 +28,23 @@ from time import time as actual_time
 
 ##### erreur #####
 
+themes = {
+"default": {
+    "lite":    (228, 138, 255),
+    "dark":    (137,  83, 153),
+    "litered": (228,  86,  73),
+    "darkred": (178,  36,  23)
+},
+    
+"pur": {
+    "lite":    (200, 200, 200),
+    "dark":    (100, 100, 100),
+    "litered": (255,  50,  50),
+    "darkred": (200,  30,  30)
+}
+}
+
+
 erreurs = {
 "001": "commande inconnue",
 "002": "dossier de destination invalide, ici -> {}",
@@ -37,17 +54,17 @@ erreurs = {
 "006": "La commande nécessite un/des argument(s) pour fonctionné",
 "007": "pas de connection internet",
 "008": "erreur d'excution,\nici -> {}",
+"009": "les theme {} n'existe pas",
 }
 
 def erreur(e,*arg):
     colorprint("Erreur "+e,"litered", "k")
     colorprint(": " + erreurs[e].format(*arg),"darkred")
 
-def makecolor():
-    setcolor("lite", (228, 138, 255))
-    setcolor("dark", (137,  83, 153))
-    setcolor("litered",    (228,  86,  73))
-    setcolor("darkred",    (178,  36,  23))
+def makecolor(theme_name):
+    for k in themes[theme_name].keys():
+        setcolor(k,themes[theme_name][k])
+        
 
 ##### commandes #####
 
@@ -203,6 +220,18 @@ def py_exec(com):
         except Exception as e: erreur("008", str(e))
     else: erreur("006")
 
+def theme(com):
+    if len(com) == 1:
+        for theme_name in themes.keys():
+            print()
+            colorprint(f" -{theme_name.upper()}-", "dark")
+            for k in themes[theme_name].keys():
+                setcolor("temp", themes[theme_name][k])
+                colorprint(f"• {k}", "temp")
+    elif com[1] in themes.keys():
+        makecolor(com[1])
+    else: erreur("009",com[1])
+
 def help():
     def printhelp(nom,doc):
         colorprint(nom,"lite","k")
@@ -226,7 +255,7 @@ def help():
 def setup():
     global action_rep, time
     action_rep = "/"
-    makecolor()
+    makecolor("default")
 
     global co_user
     login_setup()
@@ -258,6 +287,7 @@ def interpreteur(ipt):
             elif rc == "ls": ls(com)
             elif rc == "mkdir": mkdir(com)
             elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
+            elif rc == "theme": theme(com)
             elif rc == "tt-version": version()
             elif rc == "tt-update": tt_update()
             elif rc == "update": update(action_rep+"/",com)
