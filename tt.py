@@ -151,11 +151,11 @@ def update(ar,com):  # sourcery no-metrics
         for r in road:
             for l in urlopen(r).read().decode("utf-8").split("\n"):
                 l = str(l).split(",")
-                if l[0] == com[3]:
+                if l[0] == com[2]:
                     start_update(ar+com[2],l[1].strip())
                     done = True
                     break
-        if not done: erreur("005",com[3])
+        if not done: erreur("005",com[2])
     if cy.check_internet():
         for _ in range(10 - len(com)): com.append("")
         commande = com[1]
@@ -167,7 +167,7 @@ def update(ar,com):  # sourcery no-metrics
             u_road()
         elif commande == "rdl":
             u_rdl()
-        else: erreur("004",commande)
+        else: erreur("004", commande)
     else: erreur("007")
 
 def sunbreaker(com):
@@ -260,7 +260,7 @@ def interpreteur(ipt):
             elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
             elif rc == "tt-version": version()
             elif rc == "tt-update": tt_update()
-            elif rc == "update": update(action_rep,com)
+            elif rc == "update": update(action_rep+"/",com)
             elif rc == "wget": wget(com)
             else: erreur("001")
     return time
