@@ -36,7 +36,7 @@ erreurs = {
 "005": "registre {} non trouvé dans les roads",
 "006": "La commande nécessite un/des argument(s) pour fonctionné",
 "007": "pas de connection internet",
-"008": "erreur d'excution"
+"008": "erreur d'excution,\nici -> {}",
 }
 
 setcolor("litepurple", (228, 138, 255))
@@ -198,7 +198,7 @@ def wget(com):
 def py_exec(com):
     if len(com) > 1:
         try: exec("".join([c + " " for c in com[1:]]))
-        except: erreur("008")
+        except Exception as e: erreur("008", str(e))
     else: erreur("006")
 
 def help():
@@ -209,6 +209,7 @@ def help():
     printhelp("cd [chemin]","change le dossier de travail")
     printhelp("cy <*arg>","lance des commandes cytron")
     printhelp("clear","efface la console")
+    printhelp("exec <*arg>","lance des commandes python")
     printhelp("help","affiche cette aide")
     printhelp("ls [chemin]","affiche le contenu dossier de travail ou du dossier spécifier")
     printhelp("mkdir <nom>","créé le dossier du nom spécifié")
