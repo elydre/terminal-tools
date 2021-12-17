@@ -20,7 +20,7 @@ tt_version = "v0.0.11c"
 import system.mod.cytron as cy
 from system.mod.ColorPrint import colorprint, colorinput, setcolor
 from system.mod.sunbreaker import sunbreaker as sb
-from system.mod.login import StartLogin
+from system.mod.login import StartLogin, login_setup
 from system.mod.updater import update as start_update, road
 from urllib.request import urlopen
 from os import system, name
@@ -39,14 +39,15 @@ erreurs = {
 "008": "erreur d'excution,\nici -> {}",
 }
 
-setcolor("litepurple", (228, 138, 255))
-setcolor("darkpurple", (137,  83, 153))
-setcolor("litered",    (228,  86,  73))
-setcolor("darkred",    (178,  36,  23))
-
 def erreur(e,*arg):
     colorprint("Erreur "+e,"litered", "k")
     colorprint(": " + erreurs[e].format(*arg),"darkred")
+
+def makecolor():
+    setcolor("litepurple", (228, 138, 255))
+    setcolor("darkpurple", (137,  83, 153))
+    setcolor("litered",    (228,  86,  73))
+    setcolor("darkred",    (178,  36,  23))
 
 ##### commandes #####
 
@@ -221,13 +222,18 @@ def help():
 
 ##### setup #####
 
-global action_rep
-action_rep = "/"
+def setup():
+    global action_rep, time
+    action_rep = "/"
+    makecolor()
 
-global co_user
-co_user = StartLogin()
-time = actual_time()
-bvn()
+    global co_user
+    login_setup()
+    co_user = StartLogin()
+    bvn()
+    time = actual_time()
+
+setup()
 
 ##### debut du terminal #####
 
@@ -246,6 +252,7 @@ def interpreteur(ipt):
             elif rc == "cy": cy_run(com)
             elif rc in ["clear", "cls"]: clear()
             elif rc == "exec": py_exec(com)
+            elif rc == "exit": setup()
             elif rc == "help": help()
             elif rc == "ls": ls(com)
             elif rc == "mkdir": mkdir(com)

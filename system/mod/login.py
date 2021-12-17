@@ -5,13 +5,15 @@ import system.mod.cytron as cy
 from os import system, name
 
 ##### setup #####
-global logins, bad, islogin
-logins = []
-islogin_l = []
-bad = []
-login_liste = cy.cy_rfil_rela("/system/","login.txt")
-print(cy.cy_ls("/"))
-user_liste = login_liste.split("\n")
+def login_setup():
+    global logins, bad, islogin, user_liste, islogin_l
+    logins = []
+    islogin_l = []
+    bad = []
+    login_liste = cy.cy_rfil_rela("/system/","login.txt")
+    print(cy.cy_ls("/"))
+    user_liste = login_liste.split("\n")
+
 def clear():
     system('cls' if name == 'nt' else 'clear')
 
