@@ -22,28 +22,12 @@ from system.mod.ColorPrint import colorprint, colorinput, setcolor, version as c
 from system.mod.sunbreaker import sunbreaker as sb
 from system.mod.login import StartLogin, login_setup
 from system.mod.updater import update as start_update, road
+from system.mod.themes import themes
 from urllib.request import urlopen
 from os import system, name
 from time import time as actual_time
 
 ##### erreur #####
-
-themes = {
-"default": {
-    "lite":    (228, 138, 255),
-    "dark":    (137,  83, 153),
-    "litered": (228,  86,  73),
-    "darkred": (178,  36,  23)
-},
-    
-"pur": {
-    "lite":    (200, 200, 200),
-    "dark":    (100, 100, 100),
-    "litered": (255,  50,  50),
-    "darkred": (200,  30,  30)
-}
-}
-
 
 erreurs = {
 "001": "commande inconnue",
