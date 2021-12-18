@@ -2,6 +2,7 @@ mkd /home
 mkd /system
 mkd /system/mod
 
+wgt tt.py,                      https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/tt.py
 wgt /system/mod/cytron.py,      https://raw.githubusercontent.com/pf4-DEV/cytron/main/cytron.py
 wgt /system/mod/ColorPrint.py,  https://raw.githubusercontent.com/pf4-DEV/Color-Printer/main/ColorPrint.py
 wgt /system/mod/updater.py,     https://raw.githubusercontent.com/pf4-DEV/online-update/main/updater.py
