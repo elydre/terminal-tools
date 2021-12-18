@@ -38,7 +38,7 @@ erreurs = {
 "006": "La commande nécessite un/des argument(s) pour fonctionné",
 "007": "pas de connection internet",
 "008": "erreur d'excution,\nici -> {}",
-"009": "les theme {} n'existe pas",
+"009": "le theme {} n'existe pas",
 }
 
 def erreur(e,*arg):
