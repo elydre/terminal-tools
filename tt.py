@@ -14,12 +14,12 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.16"
+tt_version = "v0.0.17"
 
 ##### importation ####
 import system.mod.cytron as cy
 from system.mod.ColorPrint import colorprint, colorinput, setcolor, version as cp_version
-from system.mod.moonbreaker import moonbreaker as mb
+from system.mod.moonbreaker import moonbreaker as mb, version as mb_version
 from system.mod.login import StartLogin, login_setup
 from system.mod.updater import update as start_update, road
 from system.mod.themes import themes, theme_version
@@ -114,6 +114,7 @@ def version():
     printversion("terminal tools", tt_version)
     printversion("cytron", cy.version())
     printversion("colorprint", cp_version)
+    printversion("moonbreaker", mb_version)
     printversion("themes", theme_version)
 
 def update(ar,com):  # sourcery no-metrics
