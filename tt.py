@@ -22,7 +22,7 @@ from system.mod.ColorPrint import colorprint, colorinput, setcolor, version as c
 from system.mod.sunbreaker import sunbreaker as sb
 from system.mod.login import StartLogin, login_setup
 from system.mod.updater import update as start_update, road
-from system.mod.themes import themes
+from system.mod.themes import themes, theme_version
 from urllib.request import urlopen
 from os import system, name
 from time import time as actual_time
@@ -45,12 +45,11 @@ def erreur(e,*arg):
     colorprint("Erreur "+e,"litered", "k")
     colorprint(": " + erreurs[e].format(*arg),"darkred")
 
+##### commandes #####
+
 def makecolor(theme_name):
     for k in themes[theme_name].keys():
         setcolor(k,themes[theme_name][k])
-        
-
-##### commandes #####
 
 def user_input(time):
     colorprint("\n┌──(","dark","k")
@@ -110,11 +109,12 @@ def cd(com):
 
 def version():
     def printversion(nom,doc):
-        colorprint(nom,"lite","k")
-        colorprint(f": {doc}","dark")
-    printversion("terminal tools",tt_version)
-    printversion("cytron",cy.version())
-    printversion("colorprint",cp_version)
+        colorprint(nom,"lite", "k")
+        colorprint(f": {doc}", "dark")
+    printversion("terminal tools", tt_version)
+    printversion("cytron", cy.version())
+    printversion("colorprint", cp_version)
+    printversion("themes", theme_version)
 
 def update(ar,com):  # sourcery no-metrics
     def u_dl():
