@@ -261,7 +261,7 @@ def interpreteur(ipt):
             colorprint(i.strip(),"dark")
 
         if com:
-            rc = com[0] #root commande
+            rc = com[0]             #prefixe de la commande
             if rc == "bvn": bvn()
             elif rc == "cd": cd(com)
             elif rc == "cy": cy_run(com)
