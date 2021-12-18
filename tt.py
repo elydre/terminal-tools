@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.17"
+tt_version = "v0.0.17b"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -230,6 +230,8 @@ def help():
     printhelp("ls [chemin]","affiche le contenu dossier de travail ou du dossier spécifier")
     printhelp("mkdir <nom>","créé le dossier du nom spécifié")
     printhelp("sunbreaker <str>","afficher le break du texte entré")
+    printhelp("theme","affiche les themes disponibles")
+    printhelp("theme <theme>","change le theme actuel")
     printhelp("tt-update","lance la misse à jour de terminal-tools")
     printhelp("tt-verion","affiche la version de terminal-tools et des modules")
     printhelp("update <*arg>","lance le systeme de mise a jour (update help)")
