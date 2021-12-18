@@ -19,7 +19,7 @@ tt_version = "v0.0.16"
 ##### importation ####
 import system.mod.cytron as cy
 from system.mod.ColorPrint import colorprint, colorinput, setcolor, version as cp_version
-from system.mod.sunbreaker import sunbreaker as sb
+from system.mod.moonbreaker import moonbreaker as mb
 from system.mod.login import StartLogin, login_setup
 from system.mod.updater import update as start_update, road
 from system.mod.themes import themes, theme_version
@@ -123,8 +123,8 @@ def update(ar,com):  # sourcery no-metrics
 
     def u_help():
         def printhelp(nom,doc):
-            colorprint(nom,"lite","k")
-            colorprint(f": {doc}","dark")
+            colorprint(nom,"lite", "k")
+            colorprint(f": {doc}", "dark")
         printhelp("update dl <chemin> <url>","télécharger un registre directement depuis son url")
         printhelp("update rdl <chemin> <nom>", "télécharger un registre depuis les fichier de redirection")
         printhelp("update road list", "afficher la liste")
@@ -144,7 +144,7 @@ def update(ar,com):  # sourcery no-metrics
             for r in road:
                 colorprint(f"road: {r}","dark")
                 for l in urlopen(r).read().decode("utf-8").split("\n"):
-                    colorprint(f"  {l}","dark")
+                    colorprint(f"  {l}", "dark")
         else: erreur("004",com[2])
 
     def u_rdl():
@@ -152,11 +152,11 @@ def update(ar,com):  # sourcery no-metrics
         for r in road:
             for l in urlopen(r).read().decode("utf-8").split("\n"):
                 l = str(l).split(",")
-                if l[0] == com[2]:
+                if l[0] == com[3]:
                     start_update(ar+com[2],l[1].strip())
                     done = True
                     break
-        if not done: erreur("005",com[2])
+        if not done: erreur("005",com[3])
     if cy.check_internet():
         for _ in range(10 - len(com)): com.append("")
         commande = com[1]
@@ -168,11 +168,11 @@ def update(ar,com):  # sourcery no-metrics
             u_road()
         elif commande == "rdl":
             u_rdl()
-        else: erreur("004", commande)
+        else: erreur("004",commande)
     else: erreur("007")
 
-def sunbreaker(com):
-    colorprint(str(sb("".join(x+" "for x in com[1:len(com)]).strip())), "dark")
+def moonbreaker(com):
+    colorprint(str(mb("".join(x+" "for x in com[1:len(com)]).strip())), "dark")
 
 def tt_update():
     update("/",["update","rdl","/","tt"])
@@ -270,11 +270,11 @@ def interpreteur(ipt):
             elif rc == "help": help()
             elif rc == "ls": ls(com)
             elif rc == "mkdir": mkdir(com)
-            elif rc in ["sunbreaker", "sb"]: sunbreaker(com)
+            elif rc in ["moonbreaker", "mb"]: moonbreaker(com)
             elif rc == "theme": theme(com)
             elif rc == "tt-version": version()
             elif rc == "tt-update": tt_update()
-            elif rc == "update": update(action_rep+"/",com)
+            elif rc == "update": update(action_rep, com)
             elif rc == "wget": wget(com)
             else: erreur("001")
     return time

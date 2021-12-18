@@ -1,6 +1,6 @@
 ##### importation ####
 from system.mod.ColorPrint import colorprint, colorinput
-from system.mod.sunbreaker import sunbreaker
+from system.mod.moonbreaker import moonbreaker
 import system.mod.cytron as cy
 from os import system, name
 
@@ -42,7 +42,7 @@ def pw(co_login):
     done = False
     for user in user_liste:
         name, mdp = user.split("/")[0], user.split("/")[1]
-        if co_login != "" and co_passw != "" and int(name) == sunbreaker(co_login) and int(mdp) == sunbreaker(co_passw):
+        if co_login != "" and co_passw != "" and int(name) == moonbreaker(co_login) and int(mdp) == moonbreaker(co_passw):
             clear()
             done_bad_co(False,co_passw,True,True)
             done = True
@@ -64,7 +64,7 @@ def login():
         bad.append(True)
         islogin_l.append(True)
 
-    if sunbreaker(co_login) != 188326779898774147196118067464521:
+    if moonbreaker(co_login) != 188326779898774147196118067464521:
         pw(co_login)
 
 def StartLogin():

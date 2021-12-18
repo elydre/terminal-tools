@@ -7,5 +7,5 @@ wgt /system/mod/ColorPrint.py,  https://raw.githubusercontent.com/pf4-DEV/Color-
 wgt /system/mod/updater.py,     https://raw.githubusercontent.com/pf4-DEV/online-update/main/updater.py
 wgt /system/mod/moonbreaker.py, https://raw.githubusercontent.com/pf4-DEV/sun-breaker/main/moon-breaker/moonbreaker.py
 wgt /system/mod/login.py,       https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/mod/login.py
-wgt /system/mod/login.py,       https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/mod/themes.py
+wgt /system/mod/themes.py,      https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/mod/themes.py
 wgt /system/login.txt,          https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/login.txt
