@@ -64,7 +64,7 @@ def login():
         bad.append(True)
         islogin_l.append(True)
 
-    if moonbreaker(co_login) != 188326779898774147196118067464521:
+    if moonbreaker(co_login) != 4983807115:
         pw(co_login)
 
 def StartLogin():
