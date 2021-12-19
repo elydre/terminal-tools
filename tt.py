@@ -27,7 +27,7 @@ from urllib.request import urlopen
 from os import system, name
 from time import time as actual_time
 
-##### erreur #####
+##### erreurs #####
 
 erreurs = {
 "001": "commande inconnue",
