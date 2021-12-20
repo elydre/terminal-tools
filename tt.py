@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.22"
+tt_version = "v0.0.23"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -116,10 +116,11 @@ def cd(com):
             temp4 = "".join("/" + temp3[x] for x in range(len(temp3)-1))
             action_rep = temp4
         else:
-            to_test = action_rep + "/" + loc
+            to_test = loc if loc.startswith("/") else action_rep + "/" + loc
             temp = [mors for mors in to_test.split("/") if mors != ""]
             to_test = ""
-            for temp2 in temp: to_test += "/" + temp2
+            for t in temp: to_test += "/" + t
+            if to_test == "": to_test = "/"
             try:
                 cy.cy_ls(to_test)
                 action_rep = to_test
