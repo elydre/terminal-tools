@@ -12,5 +12,4 @@ wgt /system/shell/login.py,         https://raw.githubusercontent.com/pf4-DEV/te
 wgt /system/shell/themes.py,        https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/mod/themes.py
 wgt /system/shell/com.py,           https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/mod/com.py
 
-
 wgt /system/login.txt,              https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/login.txt
