@@ -12,7 +12,7 @@ from system.mod.updater import update as start_update
 from system.shell.login import StartLogin, login_setup
 from system.shell.themes import color_themes, input_themes, theme_version
 
-com_version = "0.0.1b"
+com_version = "0.0.1c"
 
 def erreur(e, *arg):
     colorprint("Erreur "+e,"litered", "k")
@@ -174,7 +174,7 @@ def moonbreaker(com, k):
 
 def tt_update(com, k):
     if len(com) == 1:
-        update(["update", "rdl", "/", "tt"])
+        update(["update", "rdl", "/", "tt"], k)
     else: erreur("010")
 
 def cy_run(com, k):
