@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.21"
+tt_version = "v0.0.22"
 
 ##### importation ####
 import system.mod.cytron as cy
