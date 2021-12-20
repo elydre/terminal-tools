@@ -199,7 +199,7 @@ def moonbreaker(com):
 
 def tt_update(com):
     if len(com) == 1:
-        update("/",["update","rdl","/","tt"])
+        interpreteur(f"cd / && update rdl / tt && cd {action_rep}")
     else: erreur("010")
 
 def cy_run(com):
