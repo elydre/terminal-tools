@@ -1,14 +1,18 @@
-import system.mod.cytron as cy
-from system.mod.ColorPrint import colorprint, colorinput, setcolor, version as cp_version
-from system.mod.moonbreaker import moonbreaker as mb, version as mb_version
-from system.shell.login import StartLogin, login_setup
-from system.mod.updater import update as start_update, road
-from system.shell.themes import color_themes, theme_version, input_themes
-from urllib.request import urlopen
-from os import system, name
+from os import name, system
 from time import time as actual_time
+from urllib.request import urlopen
 
-com_version = "0.0.1"
+import system.mod.cytron as cy
+from system.mod.ColorPrint import colorinput, colorprint, setcolor
+from system.mod.ColorPrint import version as cp_version
+from system.mod.moonbreaker import moonbreaker as mb
+from system.mod.moonbreaker import version as mb_version
+from system.mod.updater import road
+from system.mod.updater import update as start_update
+from system.shell.login import StartLogin, login_setup
+from system.shell.themes import color_themes, input_themes, theme_version
+
+com_version = "0.0.1b"
 
 def erreur(e, *arg):
     colorprint("Erreur "+e,"litered", "k")

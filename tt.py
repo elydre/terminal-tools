@@ -14,12 +14,14 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.1.1"
+tt_version = "v0.1.1b"
 
 ##### importation ####
-from system.mod.ColorPrint import colorprint
-import system.shell.com as c
+
 from time import time as actual_time
+
+import system.shell.com as c
+from system.mod.ColorPrint import colorprint
 
 ##### erreurs #####
 
@@ -55,6 +57,8 @@ path = {
     "wget":         (c.wget,          "télécharge un fichier depuis une url")
 }
 
+#### setup ####
+
 c.setup(erreurs)
 time = actual_time()
 
@@ -65,8 +69,7 @@ def interpreteur(ipt):
     time = actual_time()
     for i in ipt.split("&&"):
         com = [c for c in str(i).split(" ") if c != ""]
-        if len(ipt.split("&&")) > 1:
-            colorprint("──} " + i.strip(),"dark")
+        if len(ipt.split("&&")) > 1: colorprint("──} " + i.strip(),"dark")
 
         if com:
             if com[0] in path: path[com[0]][0](com, {"path": path,
