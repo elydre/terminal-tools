@@ -39,13 +39,12 @@ erreurs = {
 "007": "pas de connection internet",
 "008": "erreur d'excution,\nici -> {}",
 "009": "le theme {} n'existe pas",
+"010": "la commande ne necessite pas d'argument",
 }
 
 def erreur(e,*arg):
     colorprint("Erreur "+e,"litered", "k")
     colorprint(": " + erreurs[e].format(*arg),"darkred")
-
-##### commandes #####
 
 def makecolor(theme_name):
     for k in color_themes[theme_name].keys():
@@ -77,14 +76,18 @@ def user_input(time, input_theme_name, mode = "input"):
                     except KeyboardInterrupt:
                         print("")
 
-def clear():
-    system('cls' if name == 'nt' else 'clear')
-
 def bvn():
     colorprint("\nbienvenue ","dark","k")
     colorprint(co_user,"lite","k")
     colorprint(" sur Terminal Tools","dark")
     colorprint("Copyright (C) pf4. Tous droits réservés.\n","dark")
+
+##### commandes #####
+
+def clear(com):
+    if len(com) == 1:
+        system('cls' if name == 'nt' else 'clear')
+    else: erreur("010")
 
 def ls(com):
     try: rep = com[1]
@@ -123,17 +126,20 @@ def cd(com):
             except: erreur("002",to_test)
     else: action_rep = "/"
 
-def version():
-    def printversion(nom,doc):
-        colorprint(nom,"lite", "k")
-        colorprint(f": {doc}", "dark")
-    printversion("terminal tools", tt_version)
-    printversion("cytron", cy.version())
-    printversion("colorprint", cp_version)
-    printversion("moonbreaker", mb_version)
-    printversion("themes", theme_version)
+def version(com):
+    if len(com) == 1:
+        def printversion(nom,doc):
+            colorprint(nom,"lite", "k")
+            colorprint(f": {doc}", "dark")
+        printversion("terminal tools", tt_version)
+        printversion("cytron", cy.version())
+        printversion("colorprint", cp_version)
+        printversion("moonbreaker", mb_version)
+        printversion("themes", theme_version)
+    else: erreur("010")
 
-def update(ar,com):  # sourcery no-metrics
+def update(com):  # sourcery no-metrics
+    ar = action_rep
     def u_dl():
         try: start_update(ar+com[2],com[3])
         except: erreur("003",com[3])
@@ -191,8 +197,10 @@ def update(ar,com):  # sourcery no-metrics
 def moonbreaker(com):
     colorprint(str(mb("".join(x+" "for x in com[1:len(com)]).strip())), "dark")
 
-def tt_update():
-    update("/",["update","rdl","/","tt"])
+def tt_update(com):
+    if len(com) == 1:
+        update("/",["update","rdl","/","tt"])
+    else: erreur("010")
 
 def cy_run(com):
     commande = com[1:]
@@ -249,32 +257,22 @@ def theme(com):
     
 def quiter(com):
     if len(com) == 1:
-        clear()
+        clear(["clear"])
         exit()
     elif com[1] == "logout":
         setup()
     else: erreur("004",com[1])
 
-def help():
+def help(com):
     def printhelp(nom,doc):
         colorprint(nom,"lite","k")
         colorprint(f": {doc}","dark")
-    printhelp("bvn","affiche l'écran de bienvenue")
-    printhelp("cd [chemin]","change le dossier de travail")
-    printhelp("cy <*arg>","lance des commandes cytron")
-    printhelp("clear","efface la console")
-    printhelp("exec <*arg>","lance des commandes python")
-    printhelp("exit <*logout>","quitte le programme/la session")
-    printhelp("help","affiche cette aide")
-    printhelp("ls [chemin]","affiche le contenu dossier de travail ou du dossier spécifier")
-    printhelp("mkdir <nom>","créé le dossier du nom spécifié")
-    printhelp("moonbreaker <str>","afficher le break du texte entré")
-    printhelp("theme <color/input>","affiche les couleurs ou les thèmes disponibles")
-    printhelp("theme color/input <nom>","change le thème ou la couleur")
-    printhelp("tt-update","lance la misse à jour de terminal-tools")
-    printhelp("tt-verion","affiche la version de terminal-tools et des modules")
-    printhelp("update <*arg>","lance le systeme de mise a jour (update help)")
-    printhelp("wget <chemin> <url>","télécharge un fichier depuis une url")
+    if len(com) == 1:
+        for c in path.keys():
+            printhelp(c,path[c][1])
+    elif com[1] in path.keys():
+        printhelp(com[1],path[com[1]][1])
+    else: erreur("004",com[1])
 
 ##### setup #####
 
@@ -289,8 +287,26 @@ def setup():
     co_user = StartLogin()
     bvn()
     time = actual_time()
-
 setup()
+
+##### path #####
+
+path = {
+    "cd":           (cd,            "change le dossier de travail"),
+    "cy":           (cy_run,        "lance des commandes cytron"),
+    "clear":        (clear,         "efface la console"),
+    "exec":         (py_exec,       "lance des commandes python"),
+    "exit":         (quiter,        "quitte le programme/la session"),
+    "help":         (help,          "affiche de l'aide"),
+    "ls":           (ls,            "affiche le contenu dossier de travail ou du dossier spécifier"),
+    "mkdir":        (mkdir,         "créé le dossier du nom spécifié"),
+    "moonbreaker":  (moonbreaker,   "afficher le break du texte entré"),
+    "theme":        (theme,         "affiche les couleurs ou les thèmes disponibles et le modifie"),
+    "tt-update":    (tt_update,     "lance la misse à jour de terminal-tools"),
+    "tt-version":   (version,       "affiche la version de terminal-tools et des modules"),
+    "update":       (update,        "lance le systeme de mise a jour (update help)"),
+    "wget":         (wget,          "télécharge un fichier depuis une url")
+}
 
 ##### debut du terminal #####
 
@@ -300,27 +316,12 @@ def interpreteur(ipt):
     for i in ipt.split("&&"):
         com = [c for c in str(i).split(" ") if c != ""]
         if len(ipt.split("&&")) > 1:
-            colorprint("──} ","dark", "k")
-            colorprint(i.strip(),"dark")
+            colorprint("──} " + i.strip(),"dark")
 
         if com:
-            rc = com[0]             #prefixe de la commande
-            if rc == "bvn": bvn()
-            elif rc == "cd": cd(com)
-            elif rc == "cy": cy_run(com)
-            elif rc in ["clear", "cls"]: clear()
-            elif rc == "exec": py_exec(com)
-            elif rc == "exit": quiter(com)
-            elif rc == "help": help()
-            elif rc == "ls": ls(com)
-            elif rc == "mkdir": mkdir(com)
-            elif rc in ["moonbreaker", "mb"]: moonbreaker(com)
-            elif rc == "theme": theme(com)
-            elif rc == "tt-version": version()
-            elif rc == "tt-update": tt_update()
-            elif rc == "update": update(action_rep, com)
-            elif rc == "wget": wget(com)
+            if com[0] in path: path[com[0]][0](com)
             else: erreur("001")
+
     return time
 
 while True:
