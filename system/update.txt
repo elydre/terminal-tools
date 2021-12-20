@@ -8,8 +8,8 @@ wgt /system/mod/ColorPrint.py,      https://raw.githubusercontent.com/pf4-DEV/Co
 wgt /system/mod/updater.py,         https://raw.githubusercontent.com/pf4-DEV/online-update/main/updater.py
 wgt /system/mod/moonbreaker.py,     https://raw.githubusercontent.com/pf4-DEV/sun-breaker/main/moon-breaker/moonbreaker.py
 
-wgt /system/shell/login.py,         https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/mod/login.py
-wgt /system/shell/themes.py,        https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/mod/themes.py
-wgt /system/shell/com.py,           https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/mod/com.py
+wgt /system/shell/login.py,         https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/shell/login.py
+wgt /system/shell/themes.py,        https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/shell/themes.py
+wgt /system/shell/com.py,           https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/shell/com.py
 
 wgt /system/login.txt,              https://raw.githubusercontent.com/pf4-DEV/terminal-tools/main/system/login.txt
