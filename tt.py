@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.23"
+tt_version = "v0.1.1"
 
 ##### importation ####
 from system.mod.ColorPrint import colorprint
@@ -74,7 +74,6 @@ def interpreteur(ipt):
                                                     "tt_version": tt_version,
                                                     "time": time})
             else: c.erreur("001")
-
     return time
 
 while True:
