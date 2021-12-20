@@ -14,7 +14,7 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-tt_version = "v0.0.17c"
+tt_version = "v0.0.20"
 
 ##### importation ####
 import system.mod.cytron as cy
@@ -22,7 +22,7 @@ from system.mod.ColorPrint import colorprint, colorinput, setcolor, version as c
 from system.mod.moonbreaker import moonbreaker as mb, version as mb_version
 from system.mod.login import StartLogin, login_setup
 from system.mod.updater import update as start_update, road
-from system.mod.themes import themes, theme_version
+from system.mod.themes import color_themes, theme_version, input_themes
 from urllib.request import urlopen
 from os import system, name
 from time import time as actual_time
@@ -48,18 +48,34 @@ def erreur(e,*arg):
 ##### commandes #####
 
 def makecolor(theme_name):
-    for k in themes[theme_name].keys():
-        setcolor(k,themes[theme_name][k])
+    for k in color_themes[theme_name].keys():
+        setcolor(k,color_themes[theme_name][k])
 
-def user_input(time):
-    colorprint("\n┌──(","dark","k")
-    colorprint(co_user,"lite","k")
-    colorprint(" • ","dark","k")
-    colorprint(str(round(actual_time() - time,2)),"lite","k")
-    colorprint(")-[","dark","k")
-    colorprint(action_rep,"cyan","k")
-    colorprint("]","dark")
-    return(colorinput("└─} ","dark"))
+def user_input(time, input_theme_name, mode = "input"):
+
+    str2var = {
+    "co_user": co_user,
+    "time": str(round(actual_time() - time,2)),
+    "action_rep": action_rep
+    }
+
+    theme = input_themes[input_theme_name]
+    while True:
+        for k in theme:
+            if k["type"] == "print" or mode == "demo":
+                if "texte" in k.keys():
+                    colorprint(k["texte"], k["color"], k["code"])
+                else:
+                    colorprint(str2var[k["var"]], k["color"], k["code"])
+            elif k["type"] == "input":
+                
+                    try:
+                        if "texte" in k.keys():
+                            return colorinput(k["texte"], k["color"], k["code"])
+                        else:
+                            return colorinput(str2var[k["var"]], k["color"], k["code"])
+                    except KeyboardInterrupt:
+                        print("")
 
 def clear():
     system('cls' if name == 'nt' else 'clear')
@@ -207,15 +223,37 @@ def py_exec(com):
 
 def theme(com):
     if len(com) == 1:
-        for theme_name in themes.keys():
-            print()
-            colorprint(f" -{theme_name.upper()}-", "dark")
-            for k in themes[theme_name].keys():
-                setcolor("temp", themes[theme_name][k])
-                colorprint(f"• {k}", "temp")
-    elif com[1] in themes.keys():
-        makecolor(com[1])
-    else: erreur("009",com[1])
+        erreur("006")
+    elif com[1] == "color":
+        if len(com) == 2:
+            for theme_name in color_themes.keys():
+                print()
+                colorprint(f" -{theme_name.upper()}-", "dark")
+                for k in color_themes[theme_name].keys():
+                    setcolor("temp", color_themes[theme_name][k])
+                    colorprint(f"• {k}", "temp")
+        elif com[2] in color_themes.keys():
+            makecolor(com[2])
+        else: erreur("009",com[2])
+    elif com[1] == "input":
+        global input_theme_name
+        if len(com) == 2:
+            for theme_name in input_themes.keys():
+                colorprint(f" -{theme_name.upper()}-", "dark", "k")
+                user_input(time, theme_name, "demo")
+                print("\n")
+        elif com[2] in input_themes.keys():
+            input_theme_name = com[2]
+        else: erreur("009",com[2])
+    else: erreur("004",com[1])
+    
+def quiter(com):
+    if len(com) == 1:
+        clear()
+        exit()
+    elif com[1] == "logout":
+        setup()
+    else: erreur("004",com[1])
 
 def help():
     def printhelp(nom,doc):
@@ -226,12 +264,13 @@ def help():
     printhelp("cy <*arg>","lance des commandes cytron")
     printhelp("clear","efface la console")
     printhelp("exec <*arg>","lance des commandes python")
+    printhelp("exit <*logout>","quitte le programme/la session")
     printhelp("help","affiche cette aide")
     printhelp("ls [chemin]","affiche le contenu dossier de travail ou du dossier spécifier")
     printhelp("mkdir <nom>","créé le dossier du nom spécifié")
-    printhelp("sunbreaker <str>","afficher le break du texte entré")
-    printhelp("theme","affiche les themes disponibles")
-    printhelp("theme <theme>","change le theme actuel")
+    printhelp("moonbreaker <str>","afficher le break du texte entré")
+    printhelp("theme <color/input>","affiche les couleurs ou les thèmes disponibles")
+    printhelp("theme color/input <nom>","change le thème ou la couleur")
     printhelp("tt-update","lance la misse à jour de terminal-tools")
     printhelp("tt-verion","affiche la version de terminal-tools et des modules")
     printhelp("update <*arg>","lance le systeme de mise a jour (update help)")
@@ -240,8 +279,9 @@ def help():
 ##### setup #####
 
 def setup():
-    global action_rep, time
+    global action_rep, time, input_theme_name
     action_rep = "/"
+    input_theme_name = "kalike"
     makecolor("default")
 
     global co_user
@@ -255,6 +295,7 @@ setup()
 ##### debut du terminal #####
 
 def interpreteur(ipt):
+    global time
     time = actual_time()
     for i in ipt.split("&&"):
         com = [c for c in str(i).split(" ") if c != ""]
@@ -269,7 +310,7 @@ def interpreteur(ipt):
             elif rc == "cy": cy_run(com)
             elif rc in ["clear", "cls"]: clear()
             elif rc == "exec": py_exec(com)
-            elif rc == "exit": setup()
+            elif rc == "exit": quiter(com)
             elif rc == "help": help()
             elif rc == "ls": ls(com)
             elif rc == "mkdir": mkdir(com)
@@ -283,4 +324,4 @@ def interpreteur(ipt):
     return time
 
 while True:
-    time = interpreteur(user_input(time))
+    time = interpreteur(user_input(time, input_theme_name))
