@@ -1,3 +1,5 @@
+login ~} user
+ 
 ```py
 erreurs = {
 "001": "commande inconnue",
