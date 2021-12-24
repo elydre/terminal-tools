@@ -65,9 +65,9 @@ def clear(com, k):
 def ls(com, k):
     try: rep = com[1]
     except: rep = "/"
-    colorprint(cy.cy_path()+action_rep,"green")
+    colorprint(cy.path()+action_rep,"green")
     colorprint("│","white")
-    liste_cont = cy.cy_ls(action_rep + "/" + rep)
+    liste_cont = cy.ls(action_rep + "/" + rep)
     for x in range(len(liste_cont)):
         element = liste_cont[x]
         if x == len(liste_cont)-1: colorprint("└─","white","k")
@@ -95,7 +95,7 @@ def cd(com, k):
             for t in temp: to_test += "/" + t
             if to_test == "": to_test = "/"
             try:
-                cy.cy_ls(to_test)
+                cy.ls(to_test)
                 action_rep = to_test
             except: erreur("002",to_test)
     else: action_rep = "/"

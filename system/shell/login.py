@@ -10,8 +10,8 @@ def login_setup():
     logins = []
     islogin_l = []
     bad = []
-    login_liste = cy.cy_rfil_rela("/system/","login.txt")
-    print(cy.cy_ls("/"))
+    login_liste = cy.rfil("/system/","login.txt")
+    print(cy.ls("/"))
     user_liste = login_liste.split("\n")
 
 def clear():

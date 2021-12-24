@@ -15,30 +15,40 @@
 --|~|--|~|--|~|--|~|--|~|--|~|--
 '''
 
-### importation
+###########################
+##                       ##
+##     IMPORTATIONS      ##
+##                       ##
+###########################
+
 import os, sys
 from urllib.request import urlopen
 from _thread import start_new_thread
 
-### definition des variables
+###########################
+##                       ##
+##    INITIALISATION     ##
+##                       ##
+###########################
+
 global path_v, version, console_o
 
-version_id = "cytron 14"
+version_id = "cytron 15"
 
 console_o = False
 path_v = os.path.dirname(sys.argv[0])
 
-### fonctions
+###########################
+##                       ##
+##       FONCTION        ##
+##                       ##
+###########################
 
 def check_internet(site="https://google.com"):
     try:
         urlopen(site)
-        return(True)
-    except: return(False)
-
-def console():
-    if console_o == False:
-        start_new_thread(console_to_thread,())
+        return True
+    except: return False
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -73,46 +83,61 @@ def mkfil(chem, nom, text):
     fil.close()
     return("DONE")
 
-def rfil(chem):
-    fil = open(chem, "r")
-    return(fil.read())
-
-def rfil_rela(chem, nom):
+def rfil(chem, nom):
     temp = path_v + chem + "/" + nom
     try:
         fil = open(temp, "r")
         return(fil.read())
     except: pass
 
-### retro compatibilité
-def cy_console():               return(console())
-def cy_ls(chem):                return(ls(chem))
-def cy_version():               return(version())
-def cy_path():                  return(path())
-def cy_mkdire(chem, nom):       return(mkdir(chem, nom))
-def cy_mkdir(chem, nom):        return(mkdir(chem, nom))
-def cy_wget(chem, nom, addr):   return(wget(chem, nom, addr))
-def cy_mkfil(chem, nom, text):  return(mkfil(chem, nom, text))
-def cy_rfil(chem):              return(rfil(chem))
-def cy_rfil_rela(chem, nom):    return(rfil_rela(chem, nom))
-def cy_run(ipt):                return(run(ipt))
+###########################
+##                       ##
+##      POO - CY 15      ##
+##                       ##
+###########################
 
-### console pour console_print
+class File:
+    def __init__(self, chem, nom):
+        self.nom = nom
+        self.path = path_v + chem + "/" + nom
+        self.chem = chem
+    
+    def __str__(self) -> str:
+        return self.read()
+
+    def read(self) -> str:
+        return rfil(self.chem, self.nom)
+    
+    def make(self, text: str) -> str:
+        return mkfil(self.chem, self.nom, text)
+
+    def wget(self, addr: str) -> str:
+        return wget(self.chem, self.nom, addr)
+
+###########################
+##                       ##
+##        CONSOLE        ##
+##                       ##
+###########################
+
+def console():
+    if not console_o:
+        start_new_thread(console_to_thread,())
+
 def console_to_thread():
     global console_o
     console_o = True
     while True:
-        ipt = input('~} ').split(" ")
-        retour = run(ipt)
+        retour = run(input('~} ').split(" "))
         if retour is None: clear()
-        elif retour == "exit": console_o = False ; break
+        elif retour == "exit": console_o = False; break
         else: print(retour)
 
 ### commandes
 def run(ipt):
     if ipt[0] == "":
         return
-    if ipt[0] == "version": return(version())             # version
+    if ipt[0] == "version": return(version())               # version
     elif ipt[0] == "path": return(path())                   # path
     elif ipt[0] == "mkdir":                                 # mkdir
         try: return(mkdir(ipt[1], ipt[2]))
@@ -127,14 +152,31 @@ def run(ipt):
         try: return(ls(ipt[1]))
         except: return("erreur: 'chem rela'")
     elif ipt[0] == "rfil":                                  # rfil
-        try: return(rfil_rela(ipt[1], ipt[2]))
+        try: return(rfil(ipt[1], ipt[2]))
         except: return("erreur: 'chem rela + nom'")
     elif ipt[0] == "exit":                                  # exit
         return("exit")
     elif ipt[0] in ["aide", "help"]:              # aide
         return("version > affiche la version\npath    > affiche le chemain\nmkdir   > crée un dossier\nls      > affiche le contenue d'un dossier\nwget    > crée un fichier depuis le web\nmkfil   > créé un fichier\nrfil    > affiche le contenue d'un fichier\nhelp    > affiche l'aide")
-    else: return("commande inconnu")                        # autres commandes
+    else: return("commande inconnu")
 
 if __name__ == "__main__":
-    console()
-    while 1: pass
+    console_to_thread()
+
+###########################
+##                       ##
+##  RETRO COMPATIBILITE  ##
+##                       ##
+###########################
+
+def cy_console():               return(console())
+def cy_ls(chem):                return(ls(chem))
+def cy_version():               return(version())
+def cy_path():                  return(path())
+def cy_mkdire(chem, nom):       return(mkdir(chem, nom))
+def cy_mkdir(chem, nom):        return(mkdir(chem, nom))
+def cy_wget(chem, nom, addr):   return(wget(chem, nom, addr))
+def cy_mkfil(chem, nom, text):  return(mkfil(chem, nom, text))
+def cy_rfil(chem):              return(open(chem, "r").read())
+def cy_rfil_rela(chem, nom):    return(rfil(chem, nom))
+def cy_run(ipt):                return(run(ipt))
