@@ -23,7 +23,6 @@
 
 import os, sys
 from urllib.request import urlopen
-from _thread import start_new_thread
 
 ###########################
 ##                       ##
@@ -33,7 +32,7 @@ from _thread import start_new_thread
 
 global path_v, version, console_o
 
-version_id = "cytron 15"
+version_id = "cytron 15b"
 
 console_o = False
 path_v = os.path.dirname(sys.argv[0])
@@ -121,16 +120,10 @@ class File:
 ###########################
 
 def console():
-    if not console_o:
-        start_new_thread(console_to_thread,())
-
-def console_to_thread():
-    global console_o
-    console_o = True
     while True:
         retour = run(input('~} ').split(" "))
         if retour is None: clear()
-        elif retour == "exit": console_o = False; break
+        elif retour == "exit": exit()
         else: print(retour)
 
 ### commandes
@@ -161,7 +154,7 @@ def run(ipt):
     else: return("commande inconnu")
 
 if __name__ == "__main__":
-    console_to_thread()
+    console()
 
 ###########################
 ##                       ##
@@ -169,7 +162,6 @@ if __name__ == "__main__":
 ##                       ##
 ###########################
 
-def cy_console():               return(console())
 def cy_ls(chem):                return(ls(chem))
 def cy_version():               return(version())
 def cy_path():                  return(path())
