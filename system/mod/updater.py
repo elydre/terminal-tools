@@ -132,7 +132,7 @@ def update(chem, updfile):
         for e in l:
             comp = str(e).split(" ")
             commande = comp[0].strip()
-            arg = "".join(comp[1:len(comp)]).split(",")
+            arg = "".join(comp[1:]).split(",")
             if commande == "mkd":
                 mkdir(chem, arg[0])
             elif commande == "wgt":
