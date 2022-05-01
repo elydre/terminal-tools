@@ -1,20 +1,19 @@
-'''
---|~|--|~|--|~|--|~|--|~|--|~|--
+'''    _             _
+  ___ | | _   _   __| | _ __   ___
+ / _ \| || | | | / _` || '__| / _ |
+|  __/| || |_| || (_| || |   |  __/
+ \___||_| \__, | \__,_||_|    \___|
+          |___/
+___________________________________
 
-██  ████        ██████        ██
-████    ██     ██           ████
-██      ██   ████████     ██  ██
-████████       ██       ██    ██
-██             ██       █████████
-██             ██             ██
-               ██
-.avec    : loris_redstone
-.codé en : UTF-8
-.langage : python 3
-.github  : https://github.com/pf4-DEV/cytron
---|~|--|~|--|~|--|~|--|~|--|~|--
+ - codé en : UTF-8
+ - langage : python3
+ - GitHub  : github.com/elydre
+ - Licence : GNU GPL v3
 '''
 
+
+import contextlib
 ###########################
 ##                       ##
 ##     IMPORTATIONS      ##
@@ -47,7 +46,8 @@ def check_internet(site="https://google.com"):
     try:
         urlopen(site)
         return True
-    except: return False
+    except Exception:
+        return False
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -66,7 +66,8 @@ def mkdir(chem, nom):
         temp = path_v + chem + "/" + nom
         os.makedirs(temp)
         return("DONE")
-    except: return("erreur: 'chem rela + nom'")
+    except Exception:
+        return("erreur: 'chem rela + nom'")
 
 def wget(chem, nom, addr):
     if check_internet():
@@ -84,10 +85,9 @@ def mkfil(chem, nom, text):
 
 def rfil(chem, nom):
     temp = path_v + chem + "/" + nom
-    try:
+    with contextlib.suppress(Exception):
         fil = open(temp, "r")
         return(fil.read())
-    except: pass
 
 ###########################
 ##                       ##
